@@ -8,13 +8,13 @@
   <title>Ejercicios Interactivos con Tema Espacial</title>
   <style>
     /*****************************************************
-     * 1) RESET Y BASE: BLOQUEAR SCROLL Y EVITAR SELECCIÓN
+     * 1) RESET Y BASE
      *****************************************************/
     html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden; /* Bloquea el scroll */
       height: 100%;
+      overflow-x: hidden; /* Permite scroll vertical si se necesita */
     }
     * {
       box-sizing: border-box;
@@ -23,13 +23,14 @@
       -ms-user-select: none;
     }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #000; /* Fondo negro */
       color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       position: relative;
     }
 
     /*****************************************************
-     * 2) CONTENEDOR DE ESTRELLAS CON ANIMACIÓN
+     * 2) CONTENEDOR DE ESTRELLAS ANIMADAS
      *****************************************************/
     #starfield {
       position: fixed;
@@ -54,7 +55,7 @@
     }
 
     /*****************************************************
-     * 3) CONTENEDOR GENERAL DE PANTALLAS
+     * 3) PANTALLAS CENTRADAS
      *****************************************************/
     .pantalla {
       position: relative;
@@ -62,7 +63,7 @@
       display: none;
       width: 100%;
       max-width: 480px;
-      min-height: 100vh;
+      min-height: 100vh; /* Ocupa al menos toda la altura */
       margin: 0 auto;
       padding: 20px;
       background: rgba(255,255,255,0.05);
@@ -73,32 +74,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: start; /* Se alinean al inicio vertical */
       text-align: center;
+      overflow-y: auto; /* Permite scroll vertical si el contenido es extenso */
     }
 
-    /*****************************************************
-     * 4) ESTILOS DE TITULOS Y TEXTOS
-     *****************************************************/
     h1, h2, h3 {
-      margin-bottom: 15px;
-    }
-    h1 {
-      font-size: 1.8rem;
-    }
-    h2 {
-      font-size: 1.5rem;
-    }
-    h3 {
-      font-size: 1.2rem;
-    }
-    p {
-      margin: 10px 0;
-      line-height: 1.4;
+      margin: 20px 0 15px;
     }
 
     /*****************************************************
-     * 5) BOTONES DE NAVEGACIÓN (ATRÁS / SIGUIENTE)
+     * 4) BOTONES (ATRÁS / SIGUIENTE)
      *****************************************************/
     .nav-buttons {
       display: flex;
@@ -113,7 +99,6 @@
       border: none;
       padding: 12px 25px;
       border-radius: 6px;
-      text-decoration: none;
       cursor: pointer;
       font-size: 1rem;
       transition: background 0.3s;
@@ -124,7 +109,7 @@
     }
 
     /*****************************************************
-     * 6) RETROALIMENTACIÓN
+     * 5) RETROALIMENTACIÓN
      *****************************************************/
     .retro {
       margin-top: 10px;
@@ -138,7 +123,7 @@
     }
 
     /*****************************************************
-     * 7) OPCIONES DE MÚLTIPLE ELECCIÓN
+     * 6) OPCIONES DE MÚLTIPLE ELECCIÓN
      *****************************************************/
     .opciones {
       display: flex;
@@ -147,15 +132,17 @@
       margin: 15px 0;
       width: 100%;
       max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .opcion {
       background: #333;
       padding: 12px;
       border-radius: 4px;
-      cursor: pointer;
       border: 1px solid #555;
-      transition: background 0.2s;
       text-align: center;
+      cursor: pointer;
+      transition: background 0.2s;
       touch-action: none; /* Para evitar gestos no deseados en móvil */
     }
     .opcion:hover,
@@ -164,7 +151,7 @@
     }
 
     /*****************************************************
-     * 8) DRAG & DROP: ITEMS Y ZONAS
+     * 7) DRAG & DROP: ESTACIONES, FASES DE LA LUNA
      *****************************************************/
     .zona-drag-drop {
       display: flex;
@@ -176,7 +163,7 @@
       max-width: 400px;
     }
 
-    /* Estructura “texto + emoji” grande */
+    /* Estilo de ítems arrastrables */
     .item-drag {
       background: #333;
       border: 1px dashed #666;
@@ -186,23 +173,15 @@
       cursor: grab;
       position: relative;
       touch-action: none; /* Drag en móvil */
-      width: 120px; /* Ajusta a tu gusto */
-    }
-    .drag-text {
-      font-size: 1rem;
-      margin-bottom: 5px;
-    }
-    .drag-emoji {
-      font-size: 2rem; /* Emoji grande */
-      line-height: 1;
+      min-width: 90px;
     }
 
     .zona-drop {
       background: #2f2f2f;
       border: 2px dashed #777;
       border-radius: 5px;
-      min-height: 80px;
-      min-width: 120px;
+      min-height: 60px;
+      min-width: 100px;
       padding: 10px;
       text-align: center;
       position: relative;
@@ -212,15 +191,9 @@
       align-items: center;
       gap: 5px;
     }
-    .drop-text {
-      font-size: 1rem;
-    }
-    .drop-emoji {
-      font-size: 2rem;
-    }
 
     /*****************************************************
-     * 9) ÓRBITA INTERACTIVA DE LA LUNA
+     * 8) DEMOSTRACIÓN DE LA LUNA (ÓRBITA)
      *****************************************************/
     .orbita-contenedor {
       position: relative;
@@ -233,8 +206,7 @@
     }
     .tierra {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       font-size: 2.2rem;
     }
@@ -251,35 +223,39 @@
     }
 
     /*****************************************************
-     * 10) REORDENAR PLANETAS
+     * 9) EJERCICIO DE PLANETAS (SELECCIONAR EN ORDEN)
      *****************************************************/
-    .contenedor-planetas {
+    .contenedor-planetas-seleccion {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      margin: 15px 0;
-      width: 100%;
-      max-width: 300px;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 15px auto;
+      max-width: 350px;
     }
-    .planeta, .espacio-planeta {
+    .boton-planeta {
       background: #333;
+      color: #fff;
       border: 1px solid #555;
       border-radius: 4px;
-      padding: 10px;
-      text-align: center;
-      width: 100%;
-      cursor: grab;
-      position: relative;
-      touch-action: none; /* Drag en móvil */
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: background 0.2s;
     }
-    .espacio-planeta {
-      border: 1px dashed #666;
-      min-height: 40px;
+    .boton-planeta:hover {
+      background: #444;
     }
+    .boton-planeta.correct {
+      background: #0b6;
+      color: #fff;
+    }
+    .boton-planeta.wrong {
+      background: #c33;
+      color: #fff;
+    }
+
   </style>
 </head>
-
 <body>
   <!-- Contenedor para estrellas animadas -->
   <div id="starfield"></div>
@@ -289,7 +265,6 @@
     <h1>🚀 Bienvenido a los Ejercicios Espaciales</h1>
     <p>Explora el sistema solar, arrastra la Luna, relaciona estaciones y fases, y más.</p>
     <div class="nav-buttons">
-      <!-- Solo un botón “Siguiente” para iniciar -->
       <span></span> <!-- Espacio a la izquierda -->
       <button class="boton" onclick="cambiarPantalla(2)">Siguiente ➡️</button>
     </div>
@@ -350,24 +325,14 @@
   <section class="pantalla" id="pantalla5">
     <h2>Relación de Estaciones</h2>
     <p>Arrastra cada estación hacia su descripción correcta:</p>
+    <!-- Ítems arrastrables (revueltos con JavaScript) -->
     <div class="zona-drag-drop" id="estacionesItems">
-      <div class="item-drag" data-match="Primavera">
-        <div class="drag-text">Primavera</div>
-        <div class="drag-emoji">🌼</div>
-      </div>
-      <div class="item-drag" data-match="Verano">
-        <div class="drag-text">Verano</div>
-        <div class="drag-emoji">☀️</div>
-      </div>
-      <div class="item-drag" data-match="Otoño">
-        <div class="drag-text">Otoño</div>
-        <div class="drag-emoji">🍂</div>
-      </div>
-      <div class="item-drag" data-match="Invierno">
-        <div class="drag-text">Invierno</div>
-        <div class="drag-emoji">❄️</div>
-      </div>
+      <div class="item-drag" data-match="Primavera">Primavera 🌼</div>
+      <div class="item-drag" data-match="Verano">Verano ☀️</div>
+      <div class="item-drag" data-match="Otoño">Otoño 🍂</div>
+      <div class="item-drag" data-match="Invierno">Invierno ❄️</div>
     </div>
+    <!-- Zonas de drop (fijas) -->
     <div class="zona-drag-drop" id="estacionesDrop">
       <div class="zona-drop" data-expect="Primavera">[Flores y árboles verdes]</div>
       <div class="zona-drop" data-expect="Verano">[Niños en la playa]</div>
@@ -401,48 +366,21 @@
   <!-- PANTALLA 7: RELACIÓN FASES DE LA LUNA (DRAG & DROP) -->
   <section class="pantalla" id="pantalla7">
     <h2>Relación: Fases de la Luna</h2>
-    <p>Arrastra el nombre de la fase al emoji correspondiente:</p>
-
-    <!-- Ítems con texto y emoji grande -->
-    <div class="zona-drag-drop">
-      <div class="item-drag" data-match="Luna Nueva">
-        <div class="drag-text">Luna Nueva</div>
-        <div class="drag-emoji">🌑</div>
-      </div>
-      <div class="item-drag" data-match="Cuarto Creciente">
-        <div class="drag-text">Cuarto Creciente</div>
-        <div class="drag-emoji">🌓</div>
-      </div>
-      <div class="item-drag" data-match="Luna Llena">
-        <div class="drag-text">Luna Llena</div>
-        <div class="drag-emoji">🌕</div>
-      </div>
-      <div class="item-drag" data-match="Cuarto Menguante">
-        <div class="drag-text">Cuarto Menguante</div>
-        <div class="drag-emoji">🌗</div>
-      </div>
+    <p>Arrastra cada <strong>emoji de la Luna</strong> a su fase correspondiente:</p>
+    <!-- Ítems: SOLO los emojis de la luna, revueltos en JS -->
+    <div class="zona-drag-drop" id="lunaItems">
+      <div class="item-drag" data-match="Luna Nueva">🌑</div>
+      <div class="item-drag" data-match="Cuarto Creciente">🌓</div>
+      <div class="item-drag" data-match="Luna Llena">🌕</div>
+      <div class="item-drag" data-match="Cuarto Menguante">🌗</div>
     </div>
-
-    <!-- Zonas de destino (solo texto de ejemplo) -->
+    <!-- Zonas: texto de la fase -->
     <div class="zona-drag-drop" id="fasesDrop">
-      <div class="zona-drop" data-expect="Luna Nueva">
-        <div class="drop-text">Fase</div>
-        <div class="drop-emoji">🌑</div>
-      </div>
-      <div class="zona-drop" data-expect="Cuarto Creciente">
-        <div class="drop-text">Fase</div>
-        <div class="drop-emoji">🌓</div>
-      </div>
-      <div class="zona-drop" data-expect="Luna Llena">
-        <div class="drop-text">Fase</div>
-        <div class="drop-emoji">🌕</div>
-      </div>
-      <div class="zona-drop" data-expect="Cuarto Menguante">
-        <div class="drop-text">Fase</div>
-        <div class="drop-emoji">🌗</div>
-      </div>
+      <div class="zona-drop" data-expect="Luna Nueva">Luna Nueva</div>
+      <div class="zona-drop" data-expect="Cuarto Creciente">Cuarto Creciente</div>
+      <div class="zona-drop" data-expect="Luna Llena">Luna Llena</div>
+      <div class="zona-drop" data-expect="Cuarto Menguante">Cuarto Menguante</div>
     </div>
-
     <div class="retro" id="retroFasesLuna"></div>
     <button class="boton" onclick="revisarRelacion('fasesDrop','retroFasesLuna')">Revisar</button>
 
@@ -516,33 +454,22 @@
     </div>
   </section>
 
-  <!-- PANTALLA 12: REORDENAR PLANETAS -->
+  <!-- PANTALLA 12: SELECCIONAR PLANETAS EN ORDEN (1=Mercurio, ... 8=Neptuno) -->
   <section class="pantalla" id="pantalla12">
-    <h2>Ordena los Planetas</h2>
-    <p>Arrastra cada planeta a su espacio correspondiente (de más cercano al Sol):</p>
-    <div class="contenedor-planetas" id="planetasLista">
-      <div class="planeta" data-orden="1">Mercurio</div>
-      <div class="planeta" data-orden="2">Venus</div>
-      <div class="planeta" data-orden="3">Tierra</div>
-      <div class="planeta" data-orden="4">Marte</div>
-      <div class="planeta" data-orden="5">Júpiter</div>
-      <div class="planeta" data-orden="6">Saturno</div>
-      <div class="planeta" data-orden="7">Urano</div>
-      <div class="planeta" data-orden="8">Neptuno</div>
-    </div>
-    <div class="contenedor-planetas" id="slotsPlanetas">
-      <div class="espacio-planeta" data-esperado="1">Espacio 1</div>
-      <div class="espacio-planeta" data-esperado="2">Espacio 2</div>
-      <div class="espacio-planeta" data-esperado="3">Espacio 3</div>
-      <div class="espacio-planeta" data-esperado="4">Espacio 4</div>
-      <div class="espacio-planeta" data-esperado="5">Espacio 5</div>
-      <div class="espacio-planeta" data-esperado="6">Espacio 6</div>
-      <div class="espacio-planeta" data-esperado="7">Espacio 7</div>
-      <div class="espacio-planeta" data-esperado="8">Espacio 8</div>
+    <h2>Selecciona los Planetas en Orden</h2>
+    <p>Toca cada planeta en orden, desde el más cercano al Sol hasta el más lejano.</p>
+    <div class="contenedor-planetas-seleccion" id="planetasSeleccion">
+      <!-- Se generarán en HTML estático, pero se mezclarán al iniciar -->
+      <div class="boton-planeta" data-orden="1">Mercurio</div>
+      <div class="boton-planeta" data-orden="2">Venus</div>
+      <div class="boton-planeta" data-orden="3">Tierra</div>
+      <div class="boton-planeta" data-orden="4">Marte</div>
+      <div class="boton-planeta" data-orden="5">Júpiter</div>
+      <div class="boton-planeta" data-orden="6">Saturno</div>
+      <div class="boton-planeta" data-orden="7">Urano</div>
+      <div class="boton-planeta" data-orden="8">Neptuno</div>
     </div>
     <div class="retro" id="retroPlanetas"></div>
-    <button class="boton" onclick="revisarPlanetas()">Revisar</button>
-
     <div class="nav-buttons">
       <button class="boton" onclick="cambiarPantalla(11)">⬅️ Atrás</button>
       <button class="boton" onclick="cambiarPantalla(13)">Siguiente ➡️</button>
@@ -626,9 +553,9 @@
       star.style.top = Math.random() * 100 + 'vh';
       star.style.left = Math.random() * 100 + 'vw';
 
-      // Duración de parpadeo y retraso aleatorio
-      const duration = (2 + Math.random() * 2).toFixed(2); // entre 2s y 4s
-      const delay = (Math.random() * 5).toFixed(2);        // entre 0s y 5s
+      // Duración y retraso de parpadeo aleatorio
+      const duration = (2 + Math.random() * 2).toFixed(2); // 2s a 4s
+      const delay = (Math.random() * 5).toFixed(2);        // 0s a 5s
       star.style.setProperty('--duration', duration + 's');
       star.style.animationDelay = delay + 's';
 
@@ -645,11 +572,35 @@
       const sel = document.getElementById('pantalla' + num);
       if (sel) sel.style.display = 'flex';
     }
-    // Mostrar la pantalla inicial
+
+    // Mostrar la pantalla inicial al cargar
     cambiarPantalla(pantallaActual);
 
     /*****************************************************
-     * C) VALIDACIÓN DE OPCIONES (MÚLTIPLE ELECCIÓN)
+     * C) SHUFFLE (MEZCLAR) ELEMENTOS HIJO
+     *****************************************************/
+    function shuffleChildren(parentId) {
+      const parent = document.getElementById(parentId);
+      if (!parent) return;
+      const arr = Array.from(parent.children);
+      // Mezclar array
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      // Reinsertar
+      arr.forEach(el => parent.appendChild(el));
+    }
+
+    // Al cargar, mezclamos las estaciones, las fases de la luna, y los planetas
+    window.addEventListener('load', () => {
+      shuffleChildren('estacionesItems');
+      shuffleChildren('lunaItems');
+      shuffleChildren('planetasSeleccion'); // Para la selección de planetas
+    });
+
+    /*****************************************************
+     * D) VALIDACIÓN DE OPCIONES (MÚLTIPLE ELECCIÓN)
      *****************************************************/
     document.querySelectorAll('.opciones').forEach(grupo => {
       const respCorrecta = grupo.dataset.respuesta;
@@ -670,7 +621,7 @@
     });
 
     /*****************************************************
-     * D) ÓRBITA INTERACTIVA DE LA LUNA
+     * E) ÓRBITA INTERACTIVA DE LA LUNA
      *****************************************************/
     const luna = document.getElementById('lunaEl');
     const orbita = document.getElementById('orbitaContenedor');
@@ -757,7 +708,7 @@
     luna.addEventListener('touchstart', iniciarArrastreLuna, { passive: false });
 
     /*****************************************************
-     * E) DRAG & DROP PARA EJERCICIOS (ESTACIONES, FASES)
+     * F) DRAG & DROP: ESTACIONES Y FASES
      *****************************************************/
     let itemArrastrado = null, deltaX = 0, deltaY = 0;
     document.querySelectorAll('.item-drag').forEach(item => {
@@ -786,11 +737,13 @@
       if (!itemArrastrado) return;
       itemArrastrado.removeEventListener('pointermove', moverItem);
       itemArrastrado.removeEventListener('pointerup', soltarItem);
+
       // Verificamos si se suelta sobre una zona-drop
       let zona = document.elementFromPoint(e.clientX, e.clientY);
       if (zona && zona.classList.contains('zona-drop')) {
-        if (zona.children.length === 0 || // Está vacío
-            [...zona.children].every(ch => !ch.classList?.contains('item-drag'))) {
+        // Aseguramos que no haya ya un item-drag
+        const yaItem = Array.from(zona.children).find(ch => ch.classList?.contains('item-drag'));
+        if (!yaItem) {
           resetPosicion(itemArrastrado);
           zona.appendChild(itemArrastrado);
         } else {
@@ -815,7 +768,7 @@
       }
     }
 
-    // Asignamos data-origen a cada item-drag
+    // Asignamos data-origen a cada item-drag para saber dónde volver si no se suelta en zona-drop
     document.querySelectorAll('.zona-drag-drop').forEach(zona => {
       zona.querySelectorAll('.item-drag').forEach(item => {
         item.setAttribute('data-origen', zona.id);
@@ -847,81 +800,53 @@
     }
 
     /*****************************************************
-     * F) REORDENAR PLANETAS
+     * G) SELECCIONAR PLANETAS EN ORDEN (1..8)
      *****************************************************/
-    let planetaArr = null, pxOffX = 0, pxOffY = 0;
-    document.querySelectorAll('.planeta').forEach(planet => {
-      planet.addEventListener('pointerdown', e => {
-        e.preventDefault();
-        planetaArr = planet;
-        pxOffX = e.clientX - planet.getBoundingClientRect().left;
-        pxOffY = e.clientY - planet.getBoundingClientRect().top;
-        planet.setPointerCapture(e.pointerId);
-        planet.addEventListener('pointermove', moverPlaneta);
-        planet.addEventListener('pointerup', soltarPlaneta);
+    const contPlanetas = document.getElementById('planetasSeleccion');
+    const retroPlanetas = document.getElementById('retroPlanetas');
+    let nextExpected = 1; // El siguiente número de planeta que esperamos
+
+    contPlanetas.querySelectorAll('.boton-planeta').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const orden = parseInt(btn.dataset.orden);
+        // Si ya estaba en rojo o verde, la deseleccionamos
+        if (btn.classList.contains('correct') || btn.classList.contains('wrong')) {
+          // Si estaba correcto, debemos retroceder en la secuencia
+          if (btn.classList.contains('correct')) {
+            // Solo retroceder si es el último planeta elegido
+            if (orden === nextExpected - 1) {
+              btn.classList.remove('correct');
+              nextExpected--;
+            } else {
+              // Si no es el último, no hacemos nada
+              return;
+            }
+          } else {
+            // Estaba mal (wrong)
+            btn.classList.remove('wrong');
+          }
+        } else {
+          // Intentamos marcar
+          if (orden === nextExpected) {
+            // Correcto
+            btn.classList.add('correct');
+            nextExpected++;
+          } else {
+            // Incorrecto
+            btn.classList.add('wrong');
+          }
+        }
+        // Si completó hasta 8
+        if (nextExpected > 8) {
+          retroPlanetas.textContent = "¡Has seleccionado todos en el orden correcto! ✅";
+          retroPlanetas.classList.remove('error');
+          retroPlanetas.classList.add('correcto');
+        } else {
+          // Si no ha completado, limpiamos el mensaje
+          retroPlanetas.textContent = "";
+        }
       });
     });
-
-    function moverPlaneta(e) {
-      if (!planetaArr) return;
-      let x = e.clientX - pxOffX;
-      let y = e.clientY - pxOffY;
-      planetaArr.style.zIndex = '999';
-      planetaArr.style.position = 'absolute';
-      planetaArr.style.left = x + 'px';
-      planetaArr.style.top = y + 'px';
-    }
-
-    function soltarPlaneta(e) {
-      if (!planetaArr) return;
-      planetaArr.removeEventListener('pointermove', moverPlaneta);
-      planetaArr.removeEventListener('pointerup', soltarPlaneta);
-      let target = document.elementFromPoint(e.clientX, e.clientY);
-      if (target && target.classList.contains('espacio-planeta')) {
-        if (target.children.length === 0) {
-          resetPlanetaPos(planetaArr);
-          target.appendChild(planetaArr);
-        } else {
-          resetPlanetaPos(planetaArr);
-        }
-      } else {
-        resetPlanetaPos(planetaArr);
-      }
-      planetaArr = null;
-    }
-
-    function resetPlanetaPos(planet) {
-      planet.style.position = 'relative';
-      planet.style.left = '0px';
-      planet.style.top = '0px';
-      planet.style.zIndex = '1';
-      const cont = document.querySelector('#planetasLista');
-      if (cont && !planet.parentElement.classList.contains('espacio-planeta')) {
-        cont.appendChild(planet);
-      }
-    }
-
-    function revisarPlanetas() {
-      const slots = document.querySelectorAll('.espacio-planeta');
-      let bien = 0;
-      slots.forEach(slot => {
-        const esperado = slot.dataset.esperado;
-        const p = slot.querySelector('.planeta');
-        if (p && p.dataset.orden === esperado) {
-          bien++;
-        }
-      });
-      const retro = document.getElementById('retroPlanetas');
-      if (bien === slots.length) {
-        retro.textContent = "¡Correcto! Todos los planetas están ordenados. ✅";
-        retro.classList.remove('error');
-        retro.classList.add('correcto');
-      } else {
-        retro.textContent = "Algunos planetas están fuera de lugar. ❌";
-        retro.classList.add('error');
-        retro.classList.remove('correcto');
-      }
-    }
   </script>
 </body>
 </html>
