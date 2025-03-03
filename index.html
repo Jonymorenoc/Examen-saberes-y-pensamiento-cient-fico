@@ -2,8 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Ejercicios Interactivos con Tema Espacial</title>
   <style>
     /* 1) RESET Y BASE */
@@ -51,7 +50,7 @@
       100% { opacity: 0; }
     }
 
-    /* 3) PANTALLAS (cada ejercicio en su propia página) */
+    /* 3) PANTALLAS */
     .pantalla {
       position: relative;
       z-index: 1;
@@ -94,9 +93,7 @@
       transition: background 0.3s;
       min-width: 100px;
     }
-    .boton:hover {
-      background: #444;
-    }
+    .boton:hover { background: #444; }
 
     /* 5) RETROALIMENTACIÓN */
     .retro {
@@ -127,62 +124,47 @@
       transition: background 0.2s;
       touch-action: none;
     }
-    .opcion:hover, .opcion:active {
-      background: #444;
-    }
+    .opcion:hover, .opcion:active { background: #444; }
 
-    /* 7) DRAG & DROP: ÁREAS DE RESPUESTA */
-    .zona-drag-drop {
+    /* 7) EJERCICIOS DE SELECCIÓN (en lugar de drag) */
+    /* Los ejercicios de “Relación” se convierten en click-based */
+    .select-options {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       margin: 15px 0;
-      width: 100%;
-      max-width: 400px;
-      touch-action: none;
     }
-    .source-container {
-      background: rgba(255,255,255,0.05);
+    .option-btn {
+      background: #333;
       padding: 10px;
-      border: 2px dashed #777;
-      border-radius: 5px;
+      border-radius: 4px;
+      border: 1px solid #666;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex: 1 1 40%;
     }
-    /* En los target de estaciones y fases se mantienen las descripciones */
+    .option-btn:hover { background: #444; }
+    .select-targets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 15px 0;
+    }
     .target-container {
       background: rgba(255,255,255,0.1);
       padding: 10px;
       border: 2px dashed #aaa;
       border-radius: 5px;
-      min-height: 80px;
+      min-height: 60px;
       width: calc(50% - 10px);
-      position: relative;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
-    .target-header {
-      /* Se elimina el nombre de la estación en el target de estaciones, según indicación */
-      /* Puedes comentar o descomentar si lo deseas para fases */
-      /* font-weight: bold; margin-bottom: 5px; */
-    }
-    .placeholder {
-      opacity: 0.6;
-      font-size: 0.9rem;
-    }
-    .item-drag {
-      background: #333;
-      border: 1px dashed #666;
-      border-radius: 5px;
-      padding: 10px;
-      text-align: center;
-      cursor: grab;
-      position: relative;
-      touch-action: none;
-      min-width: 90px;
-    }
+    .target-container.correct { background: rgba(0,200,0,0.5); }
+    .target-container.incorrect { background: rgba(200,0,0,0.5); }
 
-    /* 8) DEMOSTRACIÓN DE LA LUNA (ÓRBITA) */
+    /* 8) DEMOSTRACIÓN DE LA LUNA (órbita) */
     .orbita-contenedor {
       position: relative;
       width: 250px;
@@ -228,17 +210,9 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .boton-planeta:hover {
-      background: #444;
-    }
-    .boton-planeta.correct {
-      background: #0b6;
-      color: #fff;
-    }
-    .boton-planeta.wrong {
-      background: #c33;
-      color: #fff;
-    }
+    .boton-planeta:hover { background: #444; }
+    .boton-planeta.correct { background: #0b6; color: #fff; }
+    .boton-planeta.wrong { background: #c33; color: #fff; }
 
     /* 10) EXPERIMENTO DE ELASTICIDAD */
     #elasticityContainer {
@@ -253,7 +227,7 @@
       width: 200px;
       margin: 20px auto;
       border-radius: 4px;
-      transition: width 0.5s ease-out;
+      transition: width 0.8s cubic-bezier(0.25, 1.5, 0.5, 1);
       position: relative;
     }
     #elasticHandle {
@@ -271,7 +245,7 @@
   </style>
 </head>
 <body>
-  <!-- Contenedor para estrellas animadas -->
+  <!-- Contenedor de estrellas -->
   <div id="starfield"></div>
 
   <!-- PANTALLA 1: BIENVENIDA -->
@@ -289,10 +263,10 @@
     <h2>Pregunta 1</h2>
     <h3>¿De dónde proviene la luz de la Luna?</h3>
     <div class="opciones" data-respuesta="Del Sol">
-      <div class="opcion">De la Tierra</div>
-      <div class="opcion">De Marte</div>
-      <div class="opcion">Del Sol</div>
-      <div class="opcion">De Júpiter</div>
+      <div class="opcion">De la Tierra 🌍</div>
+      <div class="opcion">De Marte 🔴</div>
+      <div class="opcion">Del Sol ☀️</div>
+      <div class="opcion">De Júpiter 🪐</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -301,15 +275,15 @@
     </div>
   </section>
 
-  <!-- PANTALLA 3: MCQ - ESTRELLA MAYOR -->
+  <!-- PANTALLA 3: MCQ - ESTRELLA MÁS GRANDE -->
   <section class="pantalla" id="pantalla3">
     <h2>Pregunta 2</h2>
     <h3>¿Cuál es la estrella más grande de nuestro sistema solar?</h3>
     <div class="opciones" data-respuesta="El Sol">
-      <div class="opcion">La Luna</div>
-      <div class="opcion">Saturno</div>
-      <div class="opcion">El Sol</div>
-      <div class="opcion">Urano</div>
+      <div class="opcion">La Luna 🌙</div>
+      <div class="opcion">Saturno 💫</div>
+      <div class="opcion">El Sol ☀️</div>
+      <div class="opcion">Urano 🔵</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -323,10 +297,10 @@
     <h2>Pregunta 3</h2>
     <h3>¿Cuántos planetas giran alrededor del Sol?</h3>
     <div class="opciones" data-respuesta="8">
-      <div class="opcion">7</div>
-      <div class="opcion">8</div>
-      <div class="opcion">9</div>
-      <div class="opcion">10</div>
+      <div class="opcion">7 🚫</div>
+      <div class="opcion">8 ✅</div>
+      <div class="opcion">9 ❓</div>
+      <div class="opcion">10 😮</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -335,19 +309,54 @@
     </div>
   </section>
 
-  <!-- PANTALLA 5: DRAG & DROP - RELACIÓN DE ESTACIONES -->
+  <!-- PANTALLA 5: DEMOSTRACIÓN - ÓRBITA DE LA LUNA -->
   <section class="pantalla" id="pantalla5">
-    <h2>Relación de Estaciones</h2>
-    <p>Arrastra cada estación a un recuadro (se muestran solo las pistas).</p>
-    <!-- Fuente: opciones de estaciones -->
-    <div class="zona-drag-drop source-container" id="estacionesSource">
-      <div class="item-drag" data-match="Primavera">Primavera 🌼</div>
-      <div class="item-drag" data-match="Verano">Verano ☀️</div>
-      <div class="item-drag" data-match="Otoño">Otoño 🍂</div>
-      <div class="item-drag" data-match="Invierno">Invierno ❄️</div>
+    <h2>Demostración: Órbita de la Luna</h2>
+    <p>
+      La Luna es el satélite natural de la Tierra y tiene diferentes fases según su posición en la órbita.  
+      La Luna tarda aproximadamente un mes en orbitar la Tierra.
+    </p>
+    <div class="orbita-contenedor" id="orbitaContenedor">
+      <div class="tierra">🌍</div>
+      <div class="luna" id="lunaEl">🌕</div>
     </div>
-    <!-- Destino: 4 recuadros con descripción (sin el nombre de la estación) -->
-    <div class="zona-drag-drop" id="estacionesDropContainer">
+    <div class="retro" id="retroLuna"></div>
+    <div class="nav-buttons">
+      <button class="boton" onclick="cambiarPantalla(4)">⬅️ Atrás</button>
+      <button class="boton" onclick="cambiarPantalla(6)">Siguiente ➡️</button>
+    </div>
+  </section>
+
+  <!-- PANTALLA 6: MCQ - INFO DE LA LUNA -->
+  <section class="pantalla" id="pantalla6">
+    <h2>Pregunta 4</h2>
+    <h3>Según la información, ¿cuánto tarda la Luna en completar su órbita?</h3>
+    <div class="opciones" data-respuesta="Aproximadamente un mes">
+      <div class="opcion">Aproximadamente un mes</div>
+      <div class="opcion">Una semana</div>
+      <div class="opcion">Dos meses</div>
+      <div class="opcion">Un año</div>
+    </div>
+    <div class="retro"></div>
+    <div class="nav-buttons">
+      <button class="boton" onclick="cambiarPantalla(5)">⬅️ Atrás</button>
+      <button class="boton" onclick="cambiarPantalla(7)">Siguiente ➡️</button>
+    </div>
+  </section>
+
+  <!-- PANTALLA 7: SELECCIÓN - RELACIÓN DE ESTACIONES -->
+  <section class="pantalla" id="pantalla7">
+    <h2>Relación de Estaciones</h2>
+    <p>Selecciona una opción y luego haz click en el recuadro de respuesta correcto (la pista se mantiene).</p>
+    <!-- Opciones de respuesta (botones) -->
+    <div class="select-options" id="estacionesOptions">
+      <div class="option-btn" data-match="Primavera">Primavera 🌼</div>
+      <div class="option-btn" data-match="Verano">Verano ☀️</div>
+      <div class="option-btn" data-match="Otoño">Otoño 🍂</div>
+      <div class="option-btn" data-match="Invierno">Invierno ❄️</div>
+    </div>
+    <!-- Contenedores destino con solo la pista -->
+    <div class="select-targets" id="estacionesTargets">
       <div class="target-container" data-expect="Primavera">
         <div class="placeholder">Flores y árboles verdes 🌸</div>
       </div>
@@ -361,111 +370,77 @@
         <div class="placeholder">Nieve y frío ❄️</div>
       </div>
     </div>
-    <div class="retro" id="retroEstaciones"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(4)">⬅️ Atrás</button>
-      <button class="boton" onclick="revisarRelacionMultiple('estacionesDropContainer','retroEstaciones', ['Primavera','Verano','Otoño','Invierno'])">Revisar</button>
-      <button class="boton" onclick="cambiarPantalla(6)">Siguiente ➡️</button>
-    </div>
-  </section>
-
-  <!-- PANTALLA 6: ORDENAR LAS ESTACIONES -->
-  <section class="pantalla" id="pantalla6">
-    <h2>Ordena las Estaciones</h2>
-    <p>Toca cada estación en orden (de Primavera a Invierno).</p>
-    <div class="contenedor-planetas-seleccion" id="estacionesSeleccion">
-      <div class="boton-planeta" data-orden="1">Primavera</div>
-      <div class="boton-planeta" data-orden="2">Verano</div>
-      <div class="boton-planeta" data-orden="3">Otoño</div>
-      <div class="boton-planeta" data-orden="4">Invierno</div>
-    </div>
-    <div class="retro" id="retroEstacionesOrden"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(5)">⬅️ Atrás</button>
-      <button class="boton" onclick="verificarOrdenEstaciones()">Verificar ✅</button>
-      <button class="boton" onclick="cambiarPantalla(7)">Siguiente ➡️</button>
-    </div>
-  </section>
-
-  <!-- PANTALLA 7: DRAG & DROP - RELACIÓN DE LAS FASES DE LA LUNA -->
-  <section class="pantalla" id="pantalla7">
-    <h2>Relación: Fases de la Luna</h2>
-    <p>Arrastra cada emoji de la Luna a su recuadro correspondiente.</p>
-    <!-- Fuente: opciones de fases -->
-    <div class="zona-drag-drop source-container" id="lunaSource">
-      <div class="item-drag" data-match="Luna Nueva">🌑</div>
-      <div class="item-drag" data-match="Cuarto Creciente">🌓</div>
-      <div class="item-drag" data-match="Luna Llena">🌕</div>
-      <div class="item-drag" data-match="Cuarto Menguante">🌗</div>
-    </div>
-    <!-- Destino: 4 recuadros con el nombre de la fase -->
-    <div class="zona-drag-drop" id="fasesDropContainer">
-      <div class="target-container" data-expect="Luna Nueva">
-        <div class="target-header">Luna Nueva</div>
-        <div class="placeholder">Arrastra aquí</div>
-      </div>
-      <div class="target-container" data-expect="Cuarto Creciente">
-        <div class="target-header">Cuarto Creciente</div>
-        <div class="placeholder">Arrastra aquí</div>
-      </div>
-      <div class="target-container" data-expect="Luna Llena">
-        <div class="target-header">Luna Llena</div>
-        <div class="placeholder">Arrastra aquí</div>
-      </div>
-      <div class="target-container" data-expect="Cuarto Menguante">
-        <div class="target-header">Cuarto Menguante</div>
-        <div class="placeholder">Arrastra aquí</div>
-      </div>
-    </div>
-    <div class="retro" id="retroFasesLuna"></div>
+    <div class="retro" id="retroEstacionesClick"></div>
     <div class="nav-buttons">
       <button class="boton" onclick="cambiarPantalla(6)">⬅️ Atrás</button>
-      <button class="boton" onclick="revisarRelacionMultiple('fasesDropContainer','retroFasesLuna', ['Luna Nueva','Cuarto Creciente','Luna Llena','Cuarto Menguante'])">Revisar</button>
+      <button class="boton" onclick="verificarSeleccion('estacionesOptions','estacionesTargets','retroEstacionesClick')">Verificar ✅</button>
       <button class="boton" onclick="cambiarPantalla(8)">Siguiente ➡️</button>
     </div>
   </section>
 
-  <!-- PANTALLA 8: MCQ - ¿Cuándo empieza la primavera? -->
+  <!-- PANTALLA 8: ORDENAR LAS ESTACIONES -->
   <section class="pantalla" id="pantalla8">
-    <h2>Pregunta 4</h2>
-    <h3>¿Cuándo empieza la primavera?</h3>
-    <div class="opciones" data-respuesta="20 de marzo">
-      <div class="opcion">20 de junio</div>
-      <div class="opcion">20 de marzo</div>
-      <div class="opcion">23 de septiembre</div>
-      <div class="opcion">21 de diciembre</div>
+    <h2>Ordena las Estaciones</h2>
+    <p>Toca cada estación en orden (de Primavera a Invierno).</p>
+    <div class="contenedor-planetas-seleccion" id="estacionesSeleccion">
+      <div class="boton-planeta" data-orden="1">Primavera 🌼</div>
+      <div class="boton-planeta" data-orden="2">Verano ☀️</div>
+      <div class="boton-planeta" data-orden="3">Otoño 🍂</div>
+      <div class="boton-planeta" data-orden="4">Invierno ❄️</div>
     </div>
-    <div class="retro"></div>
+    <div class="retro" id="retroEstacionesOrden"></div>
     <div class="nav-buttons">
       <button class="boton" onclick="cambiarPantalla(7)">⬅️ Atrás</button>
+      <button class="boton" onclick="verificarOrdenEstaciones()">Verificar ✅</button>
       <button class="boton" onclick="cambiarPantalla(9)">Siguiente ➡️</button>
     </div>
   </section>
 
-  <!-- PANTALLA 9: MCQ - ¿Cuándo empieza el otoño? -->
+  <!-- PANTALLA 9: SELECCIÓN - RELACIÓN DE LAS FASES DE LA LUNA -->
   <section class="pantalla" id="pantalla9">
-    <h2>Pregunta 5</h2>
-    <h3>¿Cuándo empieza el otoño?</h3>
-    <div class="opciones" data-respuesta="23 de septiembre">
-      <div class="opcion">21 de junio</div>
-      <div class="opcion">20 de marzo</div>
-      <div class="opcion">23 de septiembre</div>
-      <div class="opcion">22 de diciembre</div>
+    <h2>Relación: Fases de la Luna</h2>
+    <p>Selecciona el emoji correcto y luego haz click en el recuadro correspondiente.</p>
+    <div class="select-options" id="lunaOptions">
+      <div class="option-btn" data-match="Luna Nueva">🌑</div>
+      <div class="option-btn" data-match="Cuarto Creciente">🌓</div>
+      <div class="option-btn" data-match="Luna Llena">🌕</div>
+      <div class="option-btn" data-match="Cuarto Menguante">🌗</div>
     </div>
-    <div class="retro"></div>
+    <div class="select-targets" id="lunaTargets">
+      <div class="target-container" data-expect="Luna Nueva">
+        <div class="target-header">Luna Nueva</div>
+        <div class="placeholder">Click aquí</div>
+      </div>
+      <div class="target-container" data-expect="Cuarto Creciente">
+        <div class="target-header">Cuarto Creciente</div>
+        <div class="placeholder">Click aquí</div>
+      </div>
+      <div class="target-container" data-expect="Luna Llena">
+        <div class="target-header">Luna Llena</div>
+        <div class="placeholder">Click aquí</div>
+      </div>
+      <div class="target-container" data-expect="Cuarto Menguante">
+        <div class="target-header">Cuarto Menguante</div>
+        <div class="placeholder">Click aquí</div>
+      </div>
+    </div>
+    <div class="retro" id="retroLunaClick"></div>
     <div class="nav-buttons">
       <button class="boton" onclick="cambiarPantalla(8)">⬅️ Atrás</button>
+      <button class="boton" onclick="verificarSeleccion('lunaOptions','lunaTargets','retroLunaClick')">Verificar ✅</button>
       <button class="boton" onclick="cambiarPantalla(10)">Siguiente ➡️</button>
     </div>
   </section>
 
-  <!-- PANTALLA 10: T/F - Tierra y Sol (365 días) -->
+  <!-- PANTALLA 10: MCQ - ¿Cuándo empieza la primavera? -->
   <section class="pantalla" id="pantalla10">
-    <h2>Pregunta 6</h2>
-    <h3>La Tierra tarda 365 días en dar una vuelta al Sol.</h3>
-    <div class="opciones" data-respuesta="Verdadero">
-      <div class="opcion">Verdadero</div>
-      <div class="opcion">Falso</div>
+    <h2>Pregunta 5</h2>
+    <h3>¿Cuándo empieza la primavera?</h3>
+    <div class="opciones" data-respuesta="20 de marzo">
+      <div class="opcion">20 de junio 🌞</div>
+      <div class="opcion">20 de marzo 🌷</div>
+      <div class="opcion">23 de septiembre 🍁</div>
+      <div class="opcion">21 de diciembre 🎄</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -474,13 +449,15 @@
     </div>
   </section>
 
-  <!-- PANTALLA 11: T/F - El Sol gira alrededor de la Tierra -->
+  <!-- PANTALLA 11: MCQ - ¿Cuándo empieza el otoño? -->
   <section class="pantalla" id="pantalla11">
-    <h2>Pregunta 7</h2>
-    <h3>El Sol gira alrededor de la Tierra.</h3>
-    <div class="opciones" data-respuesta="Falso">
-      <div class="opcion">Falso</div>
-      <div class="opcion">Verdadero</div>
+    <h2>Pregunta 6</h2>
+    <h3>¿Cuándo empieza el otoño?</h3>
+    <div class="opciones" data-respuesta="23 de septiembre">
+      <div class="opcion">21 de junio 🌞</div>
+      <div class="opcion">20 de marzo 🌷</div>
+      <div class="opcion">23 de septiembre 🍂</div>
+      <div class="opcion">22 de diciembre 🎄</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -489,19 +466,19 @@
     </div>
   </section>
 
-  <!-- PANTALLA 12: ORDENAR PLANETAS -->
+  <!-- PANTALLA 12: ORDENAR LOS PLANETAS -->
   <section class="pantalla" id="pantalla12">
     <h2>Ordena los Planetas</h2>
     <p>Toca cada planeta en orden, desde el más cercano al Sol hasta el más lejano.</p>
     <div class="contenedor-planetas-seleccion" id="planetasSeleccion">
-      <div class="boton-planeta" data-orden="1">Mercurio</div>
-      <div class="boton-planeta" data-orden="2">Venus</div>
-      <div class="boton-planeta" data-orden="3">Tierra</div>
-      <div class="boton-planeta" data-orden="4">Marte</div>
-      <div class="boton-planeta" data-orden="5">Júpiter</div>
-      <div class="boton-planeta" data-orden="6">Saturno</div>
-      <div class="boton-planeta" data-orden="7">Urano</div>
-      <div class="boton-planeta" data-orden="8">Neptuno</div>
+      <div class="boton-planeta" data-orden="1">Mercurio 🪐</div>
+      <div class="boton-planeta" data-orden="2">Venus 🌟</div>
+      <div class="boton-planeta" data-orden="3">Tierra 🌍</div>
+      <div class="boton-planeta" data-orden="4">Marte 🔴</div>
+      <div class="boton-planeta" data-orden="5">Júpiter 🌙</div>
+      <div class="boton-planeta" data-orden="6">Saturno 🪐</div>
+      <div class="boton-planeta" data-orden="7">Urano 🔵</div>
+      <div class="boton-planeta" data-orden="8">Neptuno 🔷</div>
     </div>
     <div class="retro" id="retroPlanetas"></div>
     <div class="nav-buttons">
@@ -510,15 +487,15 @@
     </div>
   </section>
 
-  <!-- PANTALLA 13: MCQ - Días de febrero -->
+  <!-- PANTALLA 13: MCQ - ¿Cuántos días tiene febrero? -->
   <section class="pantalla" id="pantalla13">
-    <h2>Pregunta 8</h2>
+    <h2>Pregunta 7</h2>
     <h3>¿Cuántos días tiene febrero en un año normal?</h3>
     <div class="opciones" data-respuesta="28">
-      <div class="opcion">27</div>
-      <div class="opcion">28</div>
-      <div class="opcion">29</div>
-      <div class="opcion">30</div>
+      <div class="opcion">27 😕</div>
+      <div class="opcion">28 😃</div>
+      <div class="opcion">29 😮</div>
+      <div class="opcion">30 😅</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -527,15 +504,15 @@
     </div>
   </section>
 
-  <!-- PANTALLA 14: MCQ - Días de diciembre -->
+  <!-- PANTALLA 14: MCQ - ¿Cuántos días tiene diciembre? -->
   <section class="pantalla" id="pantalla14">
-    <h2>Pregunta 9</h2>
+    <h2>Pregunta 8</h2>
     <h3>¿Cuántos días tiene diciembre?</h3>
     <div class="opciones" data-respuesta="31">
-      <div class="opcion">28</div>
-      <div class="opcion">29</div>
-      <div class="opcion">30</div>
-      <div class="opcion">31</div>
+      <div class="opcion">28 😕</div>
+      <div class="opcion">29 😮</div>
+      <div class="opcion">30 😅</div>
+      <div class="opcion">31 😃</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -547,7 +524,7 @@
   <!-- PANTALLA 15: EXPERIMENTO DE ELASTICIDAD -->
   <section class="pantalla" id="pantalla15">
     <h2>Experimento de Elasticidad</h2>
-    <p>Estira la línea y observa cómo regresa a su forma original.</p>
+    <p>Estira la línea y observa cómo regresa a su forma original. ¡Inténtalo con fuerza! 💪</p>
     <div id="elasticityContainer">
       <div id="elasticLine">
         <div id="elasticHandle"></div>
@@ -596,7 +573,7 @@
   <!-- PANTALLA 18: ELASTICIDAD - Pregunta 3 -->
   <section class="pantalla" id="pantalla18">
     <h2>Elasticidad - Pregunta 3</h2>
-    <h3>¿Qué material suele ser un buen ejemplo de elasticidad?</h3>
+    <h3>¿Qué material es un buen ejemplo de elasticidad?</h3>
     <div class="opciones" data-respuesta="Goma">
       <div class="opcion">Vidrio</div>
       <div class="opcion">Madera</div>
@@ -630,7 +607,7 @@
   <!-- PANTALLA 20: FINAL - INICIAR OTRA VEZ -->
   <section class="pantalla" id="pantalla20">
     <h2>¡Fin del Examen!</h2>
-    <p>Si deseas empezar de nuevo, presiona el siguiente botón.</p>
+    <p>Si deseas comenzar de nuevo, presiona el botón.</p>
     <div class="nav-buttons">
       <button class="boton" onclick="reiniciar()">Iniciar Otra Vez 🔄</button>
     </div>
@@ -760,85 +737,61 @@
     luna.addEventListener('pointerdown', iniciarArrastreLuna);
     luna.addEventListener('touchstart', iniciarArrastreLuna, {passive:false});
 
-    /*************** F) DRAG & DROP: GENERAL (para estaciones y fases) ***************/
-    let itemArrastrado = null, deltaX_item = 0, deltaY_item = 0;
-    document.querySelectorAll('.item-drag').forEach(item => {
-      item.addEventListener('pointerdown', e => {
-        e.preventDefault();
-        itemArrastrado = item;
-        deltaX_item = e.clientX - item.getBoundingClientRect().left;
-        deltaY_item = e.clientY - item.getBoundingClientRect().top;
-        item.setPointerCapture(e.pointerId);
-        item.addEventListener('pointermove', moverItem);
-        item.addEventListener('pointerup', soltarItem);
+    /*************** F) SELECCIÓN POR CLICK (para ejercicios de Relación) ***************/
+    let selectedOption = null;
+    // Cuando se hace click en un botón de opción, se guarda la opción seleccionada
+    document.querySelectorAll('.select-options .option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remover resaltado de otros
+        document.querySelectorAll('.select-options .option-btn').forEach(b => b.style.borderColor = '#666');
+        btn.style.borderColor = '#ff4081';
+        selectedOption = btn.getAttribute('data-match');
       });
     });
-    function moverItem(e) {
-      if (!itemArrastrado) return;
-      let x = e.clientX - deltaX_item, y = e.clientY - deltaY_item;
-      itemArrastrado.style.position = 'absolute';
-      itemArrastrado.style.zIndex = '999';
-      itemArrastrado.style.left = x + 'px';
-      itemArrastrado.style.top = y + 'px';
-    }
-    function soltarItem(e) {
-      if (!itemArrastrado) return;
-      itemArrastrado.removeEventListener('pointermove', moverItem);
-      itemArrastrado.removeEventListener('pointerup', soltarItem);
-      let zona = document.elementFromPoint(e.clientX, e.clientY);
-      if (zona && zona.classList.contains('zona-drag-drop')) {
-        resetPosicion(itemArrastrado);
-        zona.appendChild(itemArrastrado);
-      } else {
-        resetPosicion(itemArrastrado);
-      }
-      itemArrastrado = null;
-    }
-    function resetPosicion(item) {
-      item.style.position = 'relative';
-      item.style.left = '0px';
-      item.style.top = '0px';
-      item.style.zIndex = '1';
-      const parentId = item.getAttribute('data-origen');
-      if (parentId && !item.parentElement.classList.contains('target-container')) {
-        const originalParent = document.getElementById(parentId);
-        if (originalParent) originalParent.appendChild(item);
-      }
-    }
-    document.querySelectorAll('.zona-drag-drop').forEach(zona => {
-      zona.querySelectorAll('.item-drag').forEach(item => {
-        item.setAttribute('data-origen', zona.id);
+    // Cuando se hace click en un target container, se asigna la opción seleccionada
+    document.querySelectorAll('.select-targets .target-container').forEach(target => {
+      target.addEventListener('click', () => {
+        if (!selectedOption) return;
+        const expected = target.getAttribute('data-expect');
+        if (selectedOption === expected) {
+          target.classList.add('correct');
+          target.textContent = selectedOption;
+          // Remover la opción asignada del listado
+          document.querySelectorAll('.select-options .option-btn').forEach(btn => {
+            if (btn.getAttribute('data-match') === selectedOption) {
+              btn.remove();
+            }
+          });
+        } else {
+          target.classList.add('incorrect');
+          setTimeout(() => { target.classList.remove('incorrect'); }, 1000);
+        }
+        selectedOption = null;
+        // Quitar resaltado de opciones
+        document.querySelectorAll('.select-options .option-btn').forEach(b => b.style.borderColor = '#666');
       });
     });
-    /**
-     * Revisar drag & drop con múltiples contenedores
-     */
-    function revisarRelacionMultiple(containerId, retroId, expected) {
-      const container = document.getElementById(containerId);
-      const targets = container.querySelectorAll('.target-container');
+    function verificarSeleccion(optionsId, targetsId, expectedArr) {
+      const targets = document.getElementById(targetsId).querySelectorAll('.target-container');
       let correct = true;
-      if (targets.length !== expected.length) { correct = false; }
-      else {
-        targets.forEach((target, index) => {
-          const dropped = target.querySelector('.item-drag');
-          if (!dropped || dropped.getAttribute('data-match') !== expected[index]) {
-            correct = false;
-          }
-        });
-      }
-      const retro = document.getElementById(retroId);
+      targets.forEach((target, index) => {
+        if (target.textContent.trim() !== expectedArr[index]) {
+          correct = false;
+        }
+      });
+      const retro = document.getElementById(targetsId.replace('Container','').replace('Targets','') + 'Click') || document.getElementById('retroEstacionesClick');
       if (correct) {
-        retro.textContent = "¡Perfecto! 👍";
+        retro.textContent = "¡Correcto! 👍";
         retro.classList.remove('error');
         retro.classList.add('correcto');
       } else {
-        retro.textContent = "Algunas relaciones no coinciden. 👎";
+        retro.textContent = "Revisa tu selección. 👎";
         retro.classList.add('error');
         retro.classList.remove('correcto');
       }
     }
 
-    /*************** G) SELECCIONAR PLANETAS EN ORDEN ***************/
+    /*************** G) ORDENAR LOS PLANETAS ***************/
     const contPlanetas = document.getElementById('planetasSeleccion');
     const retroPlanetas = document.getElementById('retroPlanetas');
     let nextExpected = 1;
@@ -862,7 +815,7 @@
       });
     });
 
-    /*************** H) SELECCIONAR LAS ESTACIONES EN ORDEN ***************/
+    /*************** H) ORDENAR LAS ESTACIONES ***************/
     const contEstaciones = document.getElementById('estacionesSeleccion');
     const retroEstacionesOrden = document.getElementById('retroEstacionesOrden');
     let nextExpectedEst = 1;
@@ -907,7 +860,8 @@
     document.addEventListener('pointerup', e => {
       if (draggingElastic) {
         draggingElastic = false;
-        elasticLine.style.width = '200px'; // ancho original con transición
+        // Al soltar, la línea vuelve a 200px con animación tipo resorte
+        elasticLine.style.width = '200px';
       }
     });
 
