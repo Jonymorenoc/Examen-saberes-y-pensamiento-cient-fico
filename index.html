@@ -2,79 +2,75 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0,
-                 maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Ejercicios Interactivos con Tema Espacial</title>
   <style>
-    /* ==================== Modo Oscuro con Fondo Espacial, Enfoque Móvil ===================== */
+    /* Reset y base */
     * {
-      margin: 0; 
-      padding: 0; 
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
     body {
-      font-family: Arial, sans-serif;
-      background: #1d1d1d 
-        url("data:image/svg+xml,\
-             %3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Crect width='1' height='1' x='10' y='10'/%3E%3Crect width='1' height='1' x='200' y='300'/%3E%3Crect width='1' height='1' x='123' y='220'/%3E%3Crect width='1' height='1' x='350' y='180'/%3E%3Crect width='1' height='1' x='50' y='150'/%3E%3Crect width='1' height='1' x='320' y='80'/%3E%3Crect width='1' height='1' x='70' y='360'/%3E%3Crect width='1' height='1' x='105' y='105'/%3E%3Crect width='1' height='1' x='280' y='200'/%3E%3C/g%3E%3C/svg%3E") 
-        repeat;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1d1d1d url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Crect width='1' height='1' x='10' y='10'/%3E%3Crect width='1' height='1' x='200' y='300'/%3E%3Crect width='1' height='1' x='123' y='220'/%3E%3Crect width='1' height='1' x='350' y='180'/%3E%3Crect width='1' height='1' x='50' y='150'/%3E%3Crect width='1' height='1' x='320' y='80'/%3E%3Crect width='1' height='1' x='70' y='360'/%3E%3Crect width='1' height='1' x='105' y='105'/%3E%3Crect width='1' height='1' x='280' y='200'/%3E%3C/g%3E%3C/svg%3E") repeat;
       color: #fff;
-      margin: auto;
-      max-width: 480px; /* Para pantallas grandes, centrado. */
-      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       min-height: 100vh;
-      position: relative;
+      padding: 10px;
     }
-
-    h1, h2 {
-      text-align: center;
-      margin: 20px 0 10px;
-    }
-    h1 {
-      font-size: 1.4rem;
-    }
-    h2 {
-      font-size: 1.2rem;
-    }
-    h3 {
-      margin: 10px 0;
-      font-size: 1rem;
-    }
-
-    /* Cada “pantalla” (sección) ocupa la vista principal */
+    /* Contenedor general para centrar cada "página" */
     .pantalla {
-      display: none; /* Se muestra solo la activa */
-      min-height: 80vh;
-      background: rgba(255,255,255,0.05); /* Fondo oscuro semitransparente */
-      margin: 10px 0;
-      padding: 15px;
+      background: rgba(255,255,255,0.05);
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.4);
-      position: relative;
+      width: 100%;
+      max-width: 480px;
+      min-height: 90vh;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
-
-    /* Botones de navegación y revisión */
+    /* Títulos y textos */
+    h1, h2, h3 {
+      margin-bottom: 15px;
+    }
+    h1 {
+      font-size: 1.8rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    h3 {
+      font-size: 1.2rem;
+    }
+    p {
+      margin: 10px 0;
+    }
+    /* Botones modernos */
     .boton {
-      display: inline-block;
       background: #2b2b2b;
       color: #fff;
-      border: 1px solid #444;
-      padding: 10px 20px;
+      border: none;
+      padding: 12px 25px;
       border-radius: 6px;
       text-decoration: none;
-      margin: 20px 5px 0;
-      text-align: center;
+      margin: 10px 5px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 1rem;
+      transition: background 0.3s;
     }
     .boton:hover {
       background: #444;
     }
-
     /* Retroalimentación */
     .retro {
-      margin-top: 8px;
+      margin-top: 10px;
       font-weight: bold;
     }
     .error {
@@ -83,42 +79,32 @@
     .correcto {
       color: #77dd77;
     }
-
-    /* Opciones (Múltiple, V/F) */
+    /* Opciones de múltiple elección */
     .opciones {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin: 10px 0;
+      margin: 15px 0;
     }
     .opcion {
       background: #333;
-      padding: 10px;
+      padding: 12px;
       border-radius: 4px;
       cursor: pointer;
-      text-align: center;
       border: 1px solid #555;
       transition: background 0.2s;
     }
-    .opcion:active,
-    .opcion:hover {
+    .opcion:hover,
+    .opcion:active {
       background: #444;
     }
-
-    /* Título con emoji */
-    .titulo-emoji {
-      font-size: 1.5rem;
-      display: inline-block;
-      margin-right: 6px;
-    }
-
-    /* Arrastrar y Soltar (Pointer Events) */
+    /* Drag & Drop (general) */
     .zona-drag-drop {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      margin: 10px 0;
+      margin: 15px 0;
     }
     .item-drag {
       background: #333;
@@ -128,8 +114,7 @@
       min-width: 100px;
       text-align: center;
       cursor: grab;
-      touch-action: none; /* Importante para pointer en mobile */
-      position: relative; /* Para reposicionar con pointer events */
+      position: relative;
     }
     .zona-drop {
       background: #2f2f2f;
@@ -141,8 +126,7 @@
       text-align: center;
       position: relative;
     }
-
-    /* Órbita de la Luna */
+    /* Órbita de la Luna (página de demostración) */
     .orbita-contenedor {
       position: relative;
       width: 250px;
@@ -154,41 +138,39 @@
     }
     .tierra {
       position: absolute;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
       font-size: 2.2rem;
     }
     .luna {
       position: absolute;
-      width: 40px; 
+      width: 40px;
       height: 40px;
       font-size: 2rem;
       cursor: pointer;
       user-select: none;
       transform: translate(-50%, -50%);
-      top: 50%; 
+      top: 50%;
       left: 90%;
-      touch-action: none; /* pointer events para mobile */
     }
-
     /* Reordenar Planetas */
     .contenedor-planetas {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
+      margin: 15px 0;
+      width: 100%;
     }
     .planeta, .espacio-planeta {
       background: #333;
       border: 1px solid #555;
       border-radius: 4px;
-      padding: 8px;
+      padding: 10px;
       text-align: center;
-      width: 80%;
-      max-width: 300px;
-      margin: 0 auto;
+      width: 90%;
       cursor: grab;
-      touch-action: none; /* pointer events en mobile */
       position: relative;
     }
     .espacio-planeta {
@@ -197,15 +179,17 @@
     }
   </style>
 </head>
-
 <body>
-  <h1><span class="titulo-emoji">🚀</span>Ejercicios Interactivos con Tema Espacial</h1>
-
-  <!-- ====== PANTALLA 1: OPCIÓN MÚLTIPLE (SISTEMA SOLAR) ====== -->
+  <!-- Página 1: Página de muestra / Bienvenida -->
   <section class="pantalla" id="pantalla1">
-    <h2>1) Opción Múltiple: Sistema Solar</h2>
+    <h1>🚀 Bienvenido a los Ejercicios Espaciales</h1>
+    <p>Explora el sistema solar, arrastra la Luna, relaciona estaciones y fases, y más. Cada ejercicio se presenta en una página completa para una experiencia clara y centrada.</p>
+    <button class="boton" onclick="cambiarPantalla(2)">Comenzar</button>
+  </section>
 
-    <!-- Pregunta 1 -->
+  <!-- Página 2: Múltiple Elección - Pregunta 1 (Sistema Solar) -->
+  <section class="pantalla" id="pantalla2">
+    <h2>Pregunta 1</h2>
     <h3>¿De dónde proviene la luz de la Luna? 🌙</h3>
     <div class="opciones" data-respuesta="Del Sol">
       <div class="opcion">De la Tierra</div>
@@ -214,8 +198,12 @@
       <div class="opcion">De Júpiter</div>
     </div>
     <div class="retro"></div>
+    <button class="boton" onclick="cambiarPantalla(3)">Siguiente ➡️</button>
+  </section>
 
-    <!-- Pregunta 2 -->
+  <!-- Página 3: Múltiple Elección - Pregunta 2 (Sistema Solar) -->
+  <section class="pantalla" id="pantalla3">
+    <h2>Pregunta 2</h2>
     <h3>¿Cuál es la estrella más grande de nuestro sistema solar? 🌟</h3>
     <div class="opciones" data-respuesta="El Sol">
       <div class="opcion">La Luna</div>
@@ -224,8 +212,13 @@
       <div class="opcion">Urano</div>
     </div>
     <div class="retro"></div>
+    <button class="boton" onclick="cambiarPantalla(2)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(4)">Siguiente ➡️</button>
+  </section>
 
-    <!-- Pregunta 3 -->
+  <!-- Página 4: Múltiple Elección - Pregunta 3 (Sistema Solar) -->
+  <section class="pantalla" id="pantalla4">
+    <h2>Pregunta 3</h2>
     <h3>¿Cuántos planetas giran alrededor del Sol? 🪐</h3>
     <div class="opciones" data-respuesta="8">
       <div class="opcion">7</div>
@@ -234,30 +227,14 @@
       <div class="opcion">10</div>
     </div>
     <div class="retro"></div>
-
-    <button class="boton" onclick="cambiarPantalla(2)">Siguiente ➡️</button>
+    <button class="boton" onclick="cambiarPantalla(3)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(5)">Siguiente ➡️</button>
   </section>
 
-  <!-- ====== PANTALLA 2: ÓRBITA INTERACTIVA DE LA LUNA ====== -->
-  <section class="pantalla" id="pantalla2">
-    <h2>2) Órbita Interactiva de la Luna</h2>
-    <p>Arrastra la Luna alrededor de la Tierra para ver las fases:</p>
-
-    <div class="orbita-contenedor" id="orbitaContenedor">
-      <div class="tierra">🌍</div>
-      <div class="luna" id="lunaEl">🌕</div>
-    </div>
-    <div class="retro" id="retroLuna"></div>
-
-    <button class="boton" onclick="cambiarPantalla(1)">⬅️ Atrás</button>
-    <button class="boton" onclick="cambiarPantalla(3)">Siguiente ➡️</button>
-  </section>
-
-  <!-- ====== PANTALLA 3: RELACIONAR ESTACIONES (DRAG & DROP) ====== -->
-  <section class="pantalla" id="pantalla3">
-    <h2>3) Relacionar: Estaciones del Año</h2>
+  <!-- Página 5: Drag & Drop - Relacionar Estaciones del Año -->
+  <section class="pantalla" id="pantalla5">
+    <h2>Relación de Estaciones</h2>
     <p>Arrastra cada estación hacia su descripción correcta:</p>
-
     <div class="zona-drag-drop" id="estacionesItems">
       <div class="item-drag" data-match="Primavera">Primavera 🌼</div>
       <div class="item-drag" data-match="Verano">Verano ☀️</div>
@@ -271,17 +248,29 @@
       <div class="zona-drop" data-expect="Invierno">[Nieve y frío]</div>
     </div>
     <div class="retro" id="retroEstaciones"></div>
-
     <button class="boton" onclick="revisarRelacion('estacionesDrop','retroEstaciones')">Revisar</button>
-    <button class="boton" onclick="cambiarPantalla(2)">⬅️ Atrás</button>
-    <button class="boton" onclick="cambiarPantalla(4)">Siguiente ➡️</button>
+    <br>
+    <button class="boton" onclick="cambiarPantalla(4)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(6)">Siguiente ➡️</button>
   </section>
 
-  <!-- ====== PANTALLA 4: RELACIONAR FASES DE LA LUNA ====== -->
-  <section class="pantalla" id="pantalla4">
-    <h2>4) Relacionar: Fases de la Luna</h2>
-    <p>Arrastra el nombre de la fase a su respectivo emoji:</p>
+  <!-- Página 6: Demostración Interactiva de la Luna (Órbita) -->
+  <section class="pantalla" id="pantalla6">
+    <h2>Demostración: Órbita de la Luna</h2>
+    <p>Arrastra la Luna alrededor de la Tierra para ver las fases:</p>
+    <div class="orbita-contenedor" id="orbitaContenedor">
+      <div class="tierra">🌍</div>
+      <div class="luna" id="lunaEl">🌕</div>
+    </div>
+    <div class="retro" id="retroLuna"></div>
+    <button class="boton" onclick="cambiarPantalla(5)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(7)">Siguiente ➡️</button>
+  </section>
 
+  <!-- Página 7: Ejercicio Interactivo de la Luna (Fases) -->
+  <section class="pantalla" id="pantalla7">
+    <h2>Relación: Fases de la Luna</h2>
+    <p>Arrastra el nombre de la fase al emoji correspondiente:</p>
     <div class="zona-drag-drop">
       <div class="item-drag" data-match="Luna Nueva">Luna Nueva</div>
       <div class="item-drag" data-match="Cuarto Creciente">Cuarto Creciente</div>
@@ -295,16 +284,15 @@
       <div class="zona-drop" data-expect="Cuarto Menguante">🌗</div>
     </div>
     <div class="retro" id="retroFasesLuna"></div>
-
     <button class="boton" onclick="revisarRelacion('fasesDrop','retroFasesLuna')">Revisar</button>
-    <button class="boton" onclick="cambiarPantalla(3)">⬅️ Atrás</button>
-    <button class="boton" onclick="cambiarPantalla(5)">Siguiente ➡️</button>
+    <br>
+    <button class="boton" onclick="cambiarPantalla(6)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(8)">Siguiente ➡️</button>
   </section>
 
-  <!-- ====== PANTALLA 5: OPCIÓN MÚLTIPLE (FECHAS IMPORTANTES) ====== -->
-  <section class="pantalla" id="pantalla5">
-    <h2>5) Fechas Importantes</h2>
-
+  <!-- Página 8: Múltiple Elección - Fechas Importantes (Primavera) -->
+  <section class="pantalla" id="pantalla8">
+    <h2>Pregunta 4</h2>
     <h3>¿Cuándo empieza la primavera? 🌸</h3>
     <div class="opciones" data-respuesta="20 de marzo">
       <div class="opcion">20 de junio</div>
@@ -313,7 +301,13 @@
       <div class="opcion">21 de diciembre</div>
     </div>
     <div class="retro"></div>
+    <button class="boton" onclick="cambiarPantalla(7)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(9)">Siguiente ➡️</button>
+  </section>
 
+  <!-- Página 9: Múltiple Elección - Fechas Importantes (Otoño) -->
+  <section class="pantalla" id="pantalla9">
+    <h2>Pregunta 5</h2>
     <h3>¿Cuándo empieza el otoño? 🍁</h3>
     <div class="opciones" data-respuesta="23 de septiembre">
       <div class="opcion">21 de junio</div>
@@ -322,39 +316,41 @@
       <div class="opcion">22 de diciembre</div>
     </div>
     <div class="retro"></div>
-
-    <button class="boton" onclick="cambiarPantalla(4)">⬅️ Atrás</button>
-    <button class="boton" onclick="cambiarPantalla(6)">Siguiente ➡️</button>
+    <button class="boton" onclick="cambiarPantalla(8)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(10)">Siguiente ➡️</button>
   </section>
 
-  <!-- ====== PANTALLA 6: VERDADERO/FALSO ====== -->
-  <section class="pantalla" id="pantalla6">
-    <h2>6) Verdadero o Falso</h2>
-
+  <!-- Página 10: Verdadero/Falso - Pregunta 1 -->
+  <section class="pantalla" id="pantalla10">
+    <h2>Pregunta 6</h2>
     <h3>La Tierra tarda 365 días en dar una vuelta al Sol. 🌍</h3>
     <div class="opciones" data-respuesta="Verdadero">
       <div class="opcion">Verdadero</div>
       <div class="opcion">Falso</div>
     </div>
     <div class="retro"></div>
+    <button class="boton" onclick="cambiarPantalla(9)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(11)">Siguiente ➡️</button>
+  </section>
 
+  <!-- Página 11: Verdadero/Falso - Pregunta 2 -->
+  <section class="pantalla" id="pantalla11">
+    <h2>Pregunta 7</h2>
     <h3>El Sol gira alrededor de la Tierra. ☀️</h3>
     <div class="opciones" data-respuesta="Falso">
       <div class="opcion">Falso</div>
       <div class="opcion">Verdadero</div>
     </div>
     <div class="retro"></div>
-
-    <button class="boton" onclick="cambiarPantalla(5)">⬅️ Atrás</button>
-    <button class="boton" onclick="cambiarPantalla(7)">Siguiente ➡️</button>
+    <button class="boton" onclick="cambiarPantalla(10)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(12)">Siguiente ➡️</button>
   </section>
 
-  <!-- ====== PANTALLA 7: REORDENAR PLANETAS ====== -->
-  <section class="pantalla" id="pantalla7">
-    <h2>7) Ordenar los Planetas</h2>
-    <p>Arrastra cada planeta a su espacio correspondiente (empezando por el más cercano al Sol):</p>
-
-    <div class="contenedor-planetas">
+  <!-- Página 12: Reordenar Planetas -->
+  <section class="pantalla" id="pantalla12">
+    <h2>Ordena los Planetas</h2>
+    <p>Arrastra cada planeta a su espacio correspondiente (de más cercano al Sol):</p>
+    <div class="contenedor-planetas" id="planetasLista">
       <div class="planeta" data-orden="1">Mercurio</div>
       <div class="planeta" data-orden="2">Venus</div>
       <div class="planeta" data-orden="3">Tierra</div>
@@ -376,16 +372,15 @@
       <div class="espacio-planeta" data-esperado="8">Espacio 8</div>
     </div>
     <div class="retro" id="retroPlanetas"></div>
-
     <button class="boton" onclick="revisarPlanetas()">Revisar</button>
-    <button class="boton" onclick="cambiarPantalla(6)">⬅️ Atrás</button>
-    <button class="boton" onclick="cambiarPantalla(8)">Siguiente ➡️</button>
+    <br>
+    <button class="boton" onclick="cambiarPantalla(11)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(13)">Siguiente ➡️</button>
   </section>
 
-  <!-- ====== PANTALLA 8: OPCIÓN MÚLTIPLE (DÍAS DE LOS MESES) ====== -->
-  <section class="pantalla" id="pantalla8">
-    <h2>8) Días de los Meses</h2>
-
+  <!-- Página 13: Múltiple Elección - Días de los Meses (Febrero) -->
+  <section class="pantalla" id="pantalla13">
+    <h2>Pregunta 8</h2>
     <h3>¿Cuántos días tiene febrero en un año normal? ❓</h3>
     <div class="opciones" data-respuesta="28">
       <div class="opcion">27</div>
@@ -394,7 +389,13 @@
       <div class="opcion">30</div>
     </div>
     <div class="retro"></div>
+    <button class="boton" onclick="cambiarPantalla(12)">⬅️ Atrás</button>
+    <button class="boton" onclick="cambiarPantalla(14)">Siguiente ➡️</button>
+  </section>
 
+  <!-- Página 14: Múltiple Elección - Días de los Meses (Diciembre) -->
+  <section class="pantalla" id="pantalla14">
+    <h2>Pregunta 9</h2>
     <h3>¿Cuántos días tiene diciembre? ❄️</h3>
     <div class="opciones" data-respuesta="31">
       <div class="opcion">28</div>
@@ -403,313 +404,283 @@
       <div class="opcion">31</div>
     </div>
     <div class="retro"></div>
-
-    <button class="boton" onclick="cambiarPantalla(7)">⬅️ Atrás</button>
-    <!-- Aquí podría terminar o iniciar de nuevo -->
+    <button class="boton" onclick="cambiarPantalla(13)">⬅️ Atrás</button>
+    <!-- Final de la serie de ejercicios -->
   </section>
 
   <script>
-  /**************************************************************
-   * FUNCIONES DE NAVEGACIÓN DE PANTALLAS
-   **************************************************************/
-  let pantallaActual = 1;
-  function cambiarPantalla(num) {
-    document.querySelectorAll('.pantalla').forEach(p => p.style.display = 'none');
-    pantallaActual = num;
-    const sel = document.getElementById('pantalla' + num);
-    if(sel) sel.style.display = 'block';
-  }
-  // Al iniciar, mostramos la pantalla 1
-  cambiarPantalla(pantallaActual);
+    // Función para cambiar entre páginas
+    let pantallaActual = 1;
+    function cambiarPantalla(num) {
+      document.querySelectorAll('.pantalla').forEach(p => p.style.display = 'none');
+      pantallaActual = num;
+      const sel = document.getElementById('pantalla' + num);
+      if(sel) sel.style.display = 'flex';
+    }
+    // Mostrar la página inicial
+    cambiarPantalla(pantallaActual);
 
-  /**************************************************************
-   * 1) Opción Múltiple & Verdadero/Falso (mismo código de validación)
-   **************************************************************/
-  document.querySelectorAll('.opciones').forEach(grupo => {
-    const respCorrecta = grupo.dataset.respuesta;
-    const retro = grupo.parentElement.querySelector('.retro');
-    grupo.querySelectorAll('.opcion').forEach(op => {
-      op.addEventListener('click', () => {
-        if(op.textContent.trim() === respCorrecta) {
-          retro.textContent = "¡Correcto! ✅";
-          retro.classList.add('correcto');
-          retro.classList.remove('error');
-        } else {
-          retro.textContent = "Intenta de nuevo. ❌";
-          retro.classList.add('error');
-          retro.classList.remove('correcto');
-        }
+    /* Validación para opciones (múltiple elección y verdadero/falso) */
+    document.querySelectorAll('.opciones').forEach(grupo => {
+      const respCorrecta = grupo.dataset.respuesta;
+      const retro = grupo.parentElement.querySelector('.retro');
+      grupo.querySelectorAll('.opcion').forEach(op => {
+        op.addEventListener('click', () => {
+          if(op.textContent.trim() === respCorrecta) {
+            retro.textContent = "¡Correcto! ✅";
+            retro.classList.add('correcto');
+            retro.classList.remove('error');
+          } else {
+            retro.textContent = "Intenta de nuevo. ❌";
+            retro.classList.add('error');
+            retro.classList.remove('correcto');
+          }
+        });
       });
     });
-  });
 
-  /**************************************************************
-   * 2) Órbita Interactiva de la Luna (Pointer Events)
-   **************************************************************/
-  const luna = document.getElementById('lunaEl');
-  const orbita = document.getElementById('orbitaContenedor');
-  const retroLuna = document.getElementById('retroLuna');
+    /* Órbita interactiva de la Luna (Página 6) */
+    const luna = document.getElementById('lunaEl');
+    const orbita = document.getElementById('orbitaContenedor');
+    const retroLuna = document.getElementById('retroLuna');
 
-  let arrastrandoLuna = false;
-  let offsetX = 0, offsetY = 0;
+    let arrastrandoLuna = false;
+    let offsetX = 0, offsetY = 0;
 
-  function obtenerCentro() {
-    const rect = orbita.getBoundingClientRect();
-    return {
-      cx: rect.left + rect.width/2,
-      cy: rect.top + rect.height/2,
-      radio: rect.width / 2.3
-    };
-  }
-
-  function iniciarArrastreLuna(e) {
-    e.preventDefault();
-    arrastrandoLuna = true;
-    if(e.type === 'touchstart') {
-      offsetX = e.touches[0].clientX - luna.getBoundingClientRect().left;
-      offsetY = e.touches[0].clientY - luna.getBoundingClientRect().top;
-    } else {
-      offsetX = e.clientX - luna.getBoundingClientRect().left;
-      offsetY = e.clientY - luna.getBoundingClientRect().top;
-    }
-    document.addEventListener('pointermove', moverLuna);
-    document.addEventListener('pointerup', soltarLuna);
-    document.addEventListener('touchmove', moverLuna, {passive:false});
-    document.addEventListener('touchend', soltarLuna);
-  }
-
-  function moverLuna(e) {
-    if(!arrastrandoLuna) return;
-    let clientX, clientY;
-    if(e.type === 'touchmove') {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
+    function obtenerCentro() {
+      const rect = orbita.getBoundingClientRect();
+      return {
+        cx: rect.left + rect.width/2,
+        cy: rect.top + rect.height/2,
+        radio: rect.width / 2.3
+      };
     }
 
-    const {cx, cy, radio} = obtenerCentro();
-    const dx = clientX - cx - offsetX;
-    const dy = clientY - cy - offsetY;
-    const angulo = Math.atan2(dy, dx);
-
-    const nuevoX = cx + radio * Math.cos(angulo);
-    const nuevoY = cy + radio * Math.sin(angulo);
-
-    const rectOrbita = orbita.getBoundingClientRect();
-    luna.style.left = (nuevoX - rectOrbita.left) + "px";
-    luna.style.top = (nuevoY - rectOrbita.top) + "px";
-
-    actualizarFaseLunar(angulo);
-  }
-
-  function soltarLuna() {
-    arrastrandoLuna = false;
-    document.removeEventListener('pointermove', moverLuna);
-    document.removeEventListener('touchmove', moverLuna);
-  }
-
-  function actualizarFaseLunar(rads) {
-    let deg = rads * (180/Math.PI);
-    if(deg < 0) deg += 360;
-
-    let fase = "", emoji = "";
-    if(deg >= 0 && deg < 90) {
-      fase = "Cuarto Creciente";
-      emoji = "🌓";
-    } else if(deg >= 90 && deg < 180) {
-      fase = "Luna Llena";
-      emoji = "🌕";
-    } else if(deg >= 180 && deg < 270) {
-      fase = "Cuarto Menguante";
-      emoji = "🌗";
-    } else {
-      fase = "Luna Nueva";
-      emoji = "🌑";
-    }
-    luna.textContent = emoji;
-    retroLuna.textContent = `Fase actual: ${fase}`;
-  }
-
-  luna.addEventListener('pointerdown', iniciarArrastreLuna);
-  luna.addEventListener('touchstart', iniciarArrastreLuna, {passive:false});
-
-  /**************************************************************
-   * 3 & 4) Relacionar Columnas con Pointer Events
-   **************************************************************/
-  let itemArrastrado = null;
-  let deltaX = 0, deltaY = 0;
-
-  // Habilitamos pointer events en cada .item-drag
-  document.querySelectorAll('.item-drag').forEach(item => {
-    item.addEventListener('pointerdown', e => {
+    function iniciarArrastreLuna(e) {
       e.preventDefault();
-      itemArrastrado = item;
-      deltaX = e.clientX - item.getBoundingClientRect().left;
-      deltaY = e.clientY - item.getBoundingClientRect().top;
-      item.setPointerCapture(e.pointerId);
-      item.addEventListener('pointermove', moverItem);
-      item.addEventListener('pointerup', soltarItem);
+      arrastrandoLuna = true;
+      if(e.type === 'touchstart') {
+        offsetX = e.touches[0].clientX - luna.getBoundingClientRect().left;
+        offsetY = e.touches[0].clientY - luna.getBoundingClientRect().top;
+      } else {
+        offsetX = e.clientX - luna.getBoundingClientRect().left;
+        offsetY = e.clientY - luna.getBoundingClientRect().top;
+      }
+      document.addEventListener('pointermove', moverLuna);
+      document.addEventListener('pointerup', soltarLuna);
+      document.addEventListener('touchmove', moverLuna, {passive:false});
+      document.addEventListener('touchend', soltarLuna);
+    }
+
+    function moverLuna(e) {
+      if(!arrastrandoLuna) return;
+      let clientX, clientY;
+      if(e.type === 'touchmove') {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      const {cx, cy, radio} = obtenerCentro();
+      const dx = clientX - cx - offsetX;
+      const dy = clientY - cy - offsetY;
+      const angulo = Math.atan2(dy, dx);
+      const nuevoX = cx + radio * Math.cos(angulo);
+      const nuevoY = cy + radio * Math.sin(angulo);
+      const rectOrbita = orbita.getBoundingClientRect();
+      luna.style.left = (nuevoX - rectOrbita.left) + "px";
+      luna.style.top = (nuevoY - rectOrbita.top) + "px";
+      actualizarFaseLunar(angulo);
+    }
+
+    function soltarLuna() {
+      arrastrandoLuna = false;
+      document.removeEventListener('pointermove', moverLuna);
+      document.removeEventListener('touchmove', moverLuna);
+    }
+
+    function actualizarFaseLunar(rads) {
+      let deg = rads * (180/Math.PI);
+      if(deg < 0) deg += 360;
+      let fase = "", emoji = "";
+      if(deg >= 0 && deg < 90) {
+        fase = "Cuarto Creciente";
+        emoji = "🌓";
+      } else if(deg >= 90 && deg < 180) {
+        fase = "Luna Llena";
+        emoji = "🌕";
+      } else if(deg >= 180 && deg < 270) {
+        fase = "Cuarto Menguante";
+        emoji = "🌗";
+      } else {
+        fase = "Luna Nueva";
+        emoji = "🌑";
+      }
+      luna.textContent = emoji;
+      retroLuna.textContent = `Fase actual: ${fase}`;
+    }
+
+    luna.addEventListener('pointerdown', iniciarArrastreLuna);
+    luna.addEventListener('touchstart', iniciarArrastreLuna, {passive:false});
+
+    /* Drag & Drop para ejercicios (Estaciones y Fases) */
+    let itemArrastrado = null, deltaX = 0, deltaY = 0;
+    document.querySelectorAll('.item-drag').forEach(item => {
+      item.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        itemArrastrado = item;
+        deltaX = e.clientX - item.getBoundingClientRect().left;
+        deltaY = e.clientY - item.getBoundingClientRect().top;
+        item.setPointerCapture(e.pointerId);
+        item.addEventListener('pointermove', moverItem);
+        item.addEventListener('pointerup', soltarItem);
+      });
     });
-  });
 
-  function moverItem(e) {
-    if(!itemArrastrado) return;
-    let x = e.clientX - deltaX;
-    let y = e.clientY - deltaY;
-    itemArrastrado.style.position = 'absolute';
-    itemArrastrado.style.zIndex = '999';
-    itemArrastrado.style.left = x + 'px';
-    itemArrastrado.style.top = y + 'px';
-  }
+    function moverItem(e) {
+      if(!itemArrastrado) return;
+      let x = e.clientX - deltaX;
+      let y = e.clientY - deltaY;
+      itemArrastrado.style.position = 'absolute';
+      itemArrastrado.style.zIndex = '999';
+      itemArrastrado.style.left = x + 'px';
+      itemArrastrado.style.top = y + 'px';
+    }
 
-  function soltarItem(e) {
-    if(!itemArrastrado) return;
-    itemArrastrado.removeEventListener('pointermove', moverItem);
-    itemArrastrado.removeEventListener('pointerup', soltarItem);
-
-    // Revisar si suelta sobre una zona-drop
-    let zona = document.elementFromPoint(e.clientX, e.clientY);
-    if(zona && zona.classList.contains('zona-drop')) {
-      // Solo si está vacía
-      if(zona.children.length === 0) {
-        resetPosicion(itemArrastrado);
-        zona.appendChild(itemArrastrado);
+    function soltarItem(e) {
+      if(!itemArrastrado) return;
+      itemArrastrado.removeEventListener('pointermove', moverItem);
+      itemArrastrado.removeEventListener('pointerup', soltarItem);
+      let zona = document.elementFromPoint(e.clientX, e.clientY);
+      if(zona && zona.classList.contains('zona-drop')) {
+        if(zona.children.length === 0) {
+          resetPosicion(itemArrastrado);
+          zona.appendChild(itemArrastrado);
+        } else {
+          resetPosicion(itemArrastrado);
+        }
       } else {
         resetPosicion(itemArrastrado);
       }
-    } else {
-      resetPosicion(itemArrastrado);
+      itemArrastrado = null;
     }
-    itemArrastrado = null;
-  }
 
-  function resetPosicion(item) {
-    item.style.position = 'relative';
-    item.style.left = '0px';
-    item.style.top = '0px';
-    item.style.zIndex = '1';
-    // Retorna a su contenedor original si no se depositó en zona-drop
-    const parentId = item.getAttribute('data-origen');
-    if(parentId && !item.parentElement.classList.contains('zona-drop')) {
-      const originalParent = document.getElementById(parentId);
-      if(originalParent) originalParent.appendChild(item);
-    }
-  }
-
-  // Asignamos data-origen para cada item
-  document.querySelectorAll('.zona-drag-drop').forEach(zona => {
-    zona.querySelectorAll('.item-drag').forEach(item => {
-      item.setAttribute('data-origen', zona.id);
-    });
-  });
-
-  /* Función para “Revisar” en Estaciones o Fases */
-  function revisarRelacion(zonaDropId, retroId) {
-    const contenedorZonas = document.getElementById(zonaDropId);
-    const drops = contenedorZonas.querySelectorAll('.zona-drop');
-    let correctos = 0;
-    drops.forEach(drop => {
-      const esperado = drop.dataset.expect;
-      const item = drop.querySelector('.item-drag');
-      if(item && item.dataset.match === esperado) {
-        correctos++;
+    function resetPosicion(item) {
+      item.style.position = 'relative';
+      item.style.left = '0px';
+      item.style.top = '0px';
+      item.style.zIndex = '1';
+      const parentId = item.getAttribute('data-origen');
+      if(parentId && !item.parentElement.classList.contains('zona-drop')) {
+        const originalParent = document.getElementById(parentId);
+        if(originalParent) originalParent.appendChild(item);
       }
-    });
-    const retro = document.getElementById(retroId);
-    if(correctos === drops.length) {
-      retro.textContent = "¡Perfecto! Todas las coincidencias son correctas. ✅";
-      retro.classList.remove('error');
-      retro.classList.add('correcto');
-    } else {
-      retro.textContent = "Algunas relaciones no coinciden. ❌";
-      retro.classList.add('error');
-      retro.classList.remove('correcto');
     }
-  }
-
-  /**************************************************************
-   * 7) Reordenar Planetas (Pointer-based)
-   **************************************************************/
-  let planetaArr = null;
-  let pxOffX = 0, pxOffY = 0;
-
-  document.querySelectorAll('.planeta').forEach(planet => {
-    planet.addEventListener('pointerdown', e => {
-      e.preventDefault();
-      planetaArr = planet;
-      pxOffX = e.clientX - planet.getBoundingClientRect().left;
-      pxOffY = e.clientY - planet.getBoundingClientRect().top;
-      planet.setPointerCapture(e.pointerId);
-      planet.addEventListener('pointermove', moverPlaneta);
-      planet.addEventListener('pointerup', soltarPlaneta);
+    document.querySelectorAll('.zona-drag-drop').forEach(zona => {
+      zona.querySelectorAll('.item-drag').forEach(item => {
+        item.setAttribute('data-origen', zona.id);
+      });
     });
-  });
 
-  function moverPlaneta(e) {
-    if(!planetaArr) return;
-    let x = e.clientX - pxOffX;
-    let y = e.clientY - pxOffY;
-    planetaArr.style.zIndex = '999';
-    planetaArr.style.position = 'absolute';
-    planetaArr.style.left = x + 'px';
-    planetaArr.style.top = y + 'px';
-  }
+    /* Reordenar Planetas */
+    let planetaArr = null, pxOffX = 0, pxOffY = 0;
+    document.querySelectorAll('.planeta').forEach(planet => {
+      planet.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        planetaArr = planet;
+        pxOffX = e.clientX - planet.getBoundingClientRect().left;
+        pxOffY = e.clientY - planet.getBoundingClientRect().top;
+        planet.setPointerCapture(e.pointerId);
+        planet.addEventListener('pointermove', moverPlaneta);
+        planet.addEventListener('pointerup', soltarPlaneta);
+      });
+    });
 
-  function soltarPlaneta(e) {
-    if(!planetaArr) return;
-    planetaArr.removeEventListener('pointermove', moverPlaneta);
-    planetaArr.removeEventListener('pointerup', soltarPlaneta);
+    function moverPlaneta(e) {
+      if(!planetaArr) return;
+      let x = e.clientX - pxOffX;
+      let y = e.clientY - pxOffY;
+      planetaArr.style.zIndex = '999';
+      planetaArr.style.position = 'absolute';
+      planetaArr.style.left = x + 'px';
+      planetaArr.style.top = y + 'px';
+    }
 
-    let target = document.elementFromPoint(e.clientX, e.clientY);
-    if(target && target.classList.contains('espacio-planeta')) {
-      // Si está vacío
-      if(target.children.length === 0) {
-        resetPlanetaPos(planetaArr);
-        target.appendChild(planetaArr);
+    function soltarPlaneta(e) {
+      if(!planetaArr) return;
+      planetaArr.removeEventListener('pointermove', moverPlaneta);
+      planetaArr.removeEventListener('pointerup', soltarPlaneta);
+      let target = document.elementFromPoint(e.clientX, e.clientY);
+      if(target && target.classList.contains('espacio-planeta')) {
+        if(target.children.length === 0) {
+          resetPlanetaPos(planetaArr);
+          target.appendChild(planetaArr);
+        } else {
+          resetPlanetaPos(planetaArr);
+        }
       } else {
         resetPlanetaPos(planetaArr);
       }
-    } else {
-      resetPlanetaPos(planetaArr);
+      planetaArr = null;
     }
-    planetaArr = null;
-  }
 
-  function resetPlanetaPos(planet) {
-    planet.style.position = 'relative';
-    planet.style.left = '0px';
-    planet.style.top = '0px';
-    planet.style.zIndex = '1';
-    // Si no está en un espacio-planeta, retornamos a la lista
-    const cont = document.querySelector('.contenedor-planetas');
-    if(cont && !planet.parentElement.classList.contains('espacio-planeta')) {
-      cont.appendChild(planet);
-    }
-  }
-
-  function revisarPlanetas() {
-    const slots = document.querySelectorAll('.espacio-planeta');
-    let bien = 0;
-    slots.forEach(slot => {
-      const esperado = slot.dataset.esperado;
-      const p = slot.querySelector('.planeta');
-      if(p && p.dataset.orden === esperado) {
-        bien++;
+    function resetPlanetaPos(planet) {
+      planet.style.position = 'relative';
+      planet.style.left = '0px';
+      planet.style.top = '0px';
+      planet.style.zIndex = '1';
+      const cont = document.querySelector('#planetasLista');
+      if(cont && !planet.parentElement.classList.contains('espacio-planeta')) {
+        cont.appendChild(planet);
       }
-    });
-    const retro = document.getElementById('retroPlanetas');
-    if(bien === slots.length) {
-      retro.textContent = "¡Todos los planetas están en el orden correcto! ✅";
-      retro.classList.remove('error');
-      retro.classList.add('correcto');
-    } else {
-      retro.textContent = "Algunos planetas están fuera de lugar. ❌";
-      retro.classList.add('error');
-      retro.classList.remove('correcto');
     }
-  }
+
+    function revisarPlanetas() {
+      const slots = document.querySelectorAll('.espacio-planeta');
+      let bien = 0;
+      slots.forEach(slot => {
+        const esperado = slot.dataset.esperado;
+        const p = slot.querySelector('.planeta');
+        if(p && p.dataset.orden === esperado) {
+          bien++;
+        }
+      });
+      const retro = document.getElementById('retroPlanetas');
+      if(bien === slots.length) {
+        retro.textContent = "¡Correcto! Todos los planetas están ordenados. ✅";
+        retro.classList.remove('error');
+        retro.classList.add('correcto');
+      } else {
+        retro.textContent = "Algunos planetas están fuera de lugar. ❌";
+        retro.classList.add('error');
+        retro.classList.remove('correcto');
+      }
+    }
+
+    /* Función para revisar ejercicios drag & drop (Estaciones y Fases) */
+    function revisarRelacion(zonaDropId, retroId) {
+      const contenedorZonas = document.getElementById(zonaDropId);
+      const drops = contenedorZonas.querySelectorAll('.zona-drop');
+      let correctos = 0;
+      drops.forEach(drop => {
+        const esperado = drop.dataset.expect;
+        const item = drop.querySelector('.item-drag');
+        if(item && item.dataset.match === esperado) {
+          correctos++;
+        }
+      });
+      const retro = document.getElementById(retroId);
+      if(correctos === drops.length) {
+        retro.textContent = "¡Perfecto! ✅";
+        retro.classList.remove('error');
+        retro.classList.add('correcto');
+      } else {
+        retro.textContent = "Algunas relaciones no coinciden. ❌";
+        retro.classList.add('error');
+        retro.classList.remove('correcto');
+      }
+    }
   </script>
 </body>
 </html>
