@@ -1,604 +1,569 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, 
-                 maximum-scale=1.0, user-scalable=no" />
-  <title>Interactive Study Exercises</title>
+                 maximum-scale=1.0, user-scalable=no">
+  <title>Ejercicios Interactivos</title>
   <style>
-    /* === Mobile-First Basic Reset & Styling === */
+    /* ==== Estilos Móviles Básicos ==== */
     * {
-      box-sizing: border-box;
-      margin: 0; 
-      padding: 0;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
-
     body {
-      font-family: sans-serif;
-      background: #f7f7f7;
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
       color: #333;
-      padding: 10px;
-      max-width: 600px; /* For demonstration on desktop, but still mobile-first */
+      max-width: 480px;  /* Para visualización en desktop, pero mantenemos enfoque mobile */
       margin: auto;
+      padding: 10px;
     }
-
     h1, h2 {
       text-align: center;
       margin: 20px 0 10px 0;
     }
-
-    .exercise-container {
+    .contenedor-ejercicio {
       background: #fff;
-      margin: 15px 0;
       padding: 15px;
-      border-radius: 8px;
+      margin: 15px 0;
+      border-radius: 6px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
-
-    .exercise-container h3 {
+    .contenedor-ejercicio h3 {
       margin-bottom: 10px;
-      font-size: 1.1rem;
+    }
+    .retroalimentacion {
+      margin-top: 5px;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+    }
+    .correcto {
+      color: green;
     }
 
-    .multiple-choice, .true-false {
+    /* ==== Botones grandes para móvil (opción múltiple) ==== */
+    .opciones {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 8px;
     }
-
-    .choice, .tf-option {
-      background: #eee;
+    .opcion {
+      background: #e9e9e9;
       padding: 10px;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
       transition: background 0.3s;
-      user-select: none;
+      text-align: center;
+    }
+    .opcion:hover {
+      background: #dcdcdc;
     }
 
-    .choice:hover, .tf-option:hover {
-      background: #ddd;
-    }
-
-    /* === Feedback messages === */
-    .feedback {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #007b00; /* green */
-    }
-
-    .feedback.error {
-      color: #c00; /* red */
-    }
-
-    /* === Matching (drag & drop) styling === */
-    .match-columns {
+    /* ==== Verdadero/Falso ==== */
+    .verdadero-falso {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
+      margin-top: 10px;
     }
-    .match-list {
+
+    /* ==== Drag & Drop: Relacionar columnas ==== */
+    .zona-drag-drop {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       justify-content: center;
+      margin-top: 10px;
     }
-    .match-item, .match-dropzone {
+    .item-drag {
+      background: #fafafa;
       border: 2px dashed #aaa;
       border-radius: 5px;
       padding: 10px;
-      min-width: 80px;
+      min-width: 100px;
       text-align: center;
-      background: #fafafa;
-      cursor: move;
+      cursor: grab;
     }
-    .match-dropzone {
+    .item-drag:active {
+      cursor: grabbing;
+    }
+    .zona-drop {
+      background: #fefefe;
+      border: 2px dashed #ddd;
+      border-radius: 5px;
       min-height: 40px;
-      background: #fcfcfc;
+      min-width: 120px;
+      padding: 10px;
+      text-align: center;
     }
 
-    /* === Interactive Moon Orbit === */
-    .orbit-container {
+    /* ==== Órbita de la Luna (interactiva) ==== */
+    .orbita-contenedor {
       position: relative;
       width: 250px;
       height: 250px;
-      margin: 0 auto;
-      background: #d3eeff;
+      margin: 20px auto;
+      background: #c5e3ff;
       border-radius: 50%;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
     }
-    .earth {
+    .tierra {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 2rem;
     }
-    .moon {
+    .luna {
       position: absolute;
-      width: 40px;
+      width: 40px; 
       height: 40px;
       font-size: 2rem;
       cursor: pointer;
       user-select: none;
       transform: translate(-50%, -50%);
-      /* Default position (right side) */
+      /* Posición inicial (lado derecho) */
       top: 50%;
       left: 90%;
     }
 
-    /* === Reorder Planets === */
-    .reorder-planets-container {
+    /* ==== Reordenar Planetas ==== */
+    .reordenar-contenedor {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
     }
-    .planet-slot, .planet {
+    .planeta, .espacio-planeta {
       width: 80%;
       max-width: 300px;
-      min-height: 40px;
-      padding: 10px;
-      text-align: center;
+      background: #eee;
       border: 1px solid #ccc;
       border-radius: 4px;
+      padding: 8px;
+      text-align: center;
       margin: 0 auto;
-      background: #fafafa;
     }
-    .planet {
-      cursor: move;
+    .planeta {
+      cursor: grab;
+    }
+    .planeta:active {
+      cursor: grabbing;
     }
   </style>
 </head>
 <body>
 
-  <h1>Interactive Study Exercises</h1>
+  <h1>Ejercicios Interactivos</h1>
 
-  <!-- =============== 1. Multiple Choice (Sample) =============== -->
-  <div class="exercise-container" id="multipleChoice1">
-    <h2>1. Multiple Choice: Sistema Solar</h2>
+  <!-- ===============================
+       1. Opción múltiple: Sistema Solar
+  ================================ -->
+  <div class="contenedor-ejercicio">
+    <h2>1. Opción Múltiple: Sistema Solar</h2>
 
-    <!-- Question 1 -->
     <div>
       <h3>¿De dónde viene la luz de la Luna?</h3>
-      <div class="multiple-choice" data-correct="Del Sol">
-        <div class="choice">De la Tierra</div>
-        <div class="choice">De Marte</div>
-        <div class="choice">Del Sol</div>
-        <div class="choice">De Júpiter</div>
+      <div class="opciones" data-correcta="Del Sol">
+        <div class="opcion">De la Tierra</div>
+        <div class="opcion">De Marte</div>
+        <div class="opcion">Del Sol</div>
+        <div class="opcion">De Júpiter</div>
       </div>
-      <div class="feedback"></div>
+      <div class="retroalimentacion"></div>
     </div>
 
-    <!-- Question 2 -->
     <div>
       <h3>¿Cuál es la estrella más grande de nuestro sistema solar?</h3>
-      <div class="multiple-choice" data-correct="El Sol">
-        <div class="choice">La Luna</div>
-        <div class="choice">Saturno</div>
-        <div class="choice">El Sol</div>
-        <div class="choice">Urano</div>
+      <div class="opciones" data-correcta="El Sol">
+        <div class="opcion">La Luna</div>
+        <div class="opcion">Saturno</div>
+        <div class="opcion">El Sol</div>
+        <div class="opcion">Urano</div>
       </div>
-      <div class="feedback"></div>
+      <div class="retroalimentacion"></div>
     </div>
 
-    <!-- Question 3 -->
     <div>
       <h3>¿Cuántos planetas giran alrededor del Sol?</h3>
-      <div class="multiple-choice" data-correct="8">
-        <div class="choice">7</div>
-        <div class="choice">8</div>
-        <div class="choice">9</div>
-        <div class="choice">10</div>
+      <div class="opciones" data-correcta="8">
+        <div class="opcion">7</div>
+        <div class="opcion">8</div>
+        <div class="opcion">9</div>
+        <div class="opcion">10</div>
       </div>
-      <div class="feedback"></div>
+      <div class="retroalimentacion"></div>
     </div>
   </div>
 
-  <!-- =============== 2. Matching Columns: Estaciones del año =============== -->
-  <div class="exercise-container">
-    <h2>2. Match the Seasons to the Image</h2>
-    <h3>Drag each season name to the correct image description</h3>
-    <div class="match-columns" id="matchSeasons">
-      <!-- Seasons to drag -->
-      <div class="match-list" id="seasonItems">
-        <div class="match-item" draggable="true" data-season="Primavera">Primavera 🌼</div>
-        <div class="match-item" draggable="true" data-season="Verano">Verano ☀️</div>
-        <div class="match-item" draggable="true" data-season="Otoño">Otoño 🍂</div>
-        <div class="match-item" draggable="true" data-season="Invierno">Invierno ❄️</div>
-      </div>
-      <!-- Drop zones for images -->
-      <div class="match-list" id="seasonTargets">
-        <div class="match-dropzone" data-match="Primavera">[Imagen de árboles floreciendo]</div>
-        <div class="match-dropzone" data-match="Verano">[Imagen de niños en la playa]</div>
-        <div class="match-dropzone" data-match="Otoño">[Imagen de hojas secas]</div>
-        <div class="match-dropzone" data-match="Invierno">[Imagen de nieve]</div>
-      </div>
+  <!-- ===============================
+       2. Relacionar columnas: Estaciones
+  ================================ -->
+  <div class="contenedor-ejercicio" id="ejEstaciones">
+    <h2>2. Relacionar: Estaciones del Año</h2>
+    <p>Arrastra la estación hacia la descripción correspondiente:</p>
+    <div class="zona-drag-drop">
+      <!-- Elementos a arrastrar (estaciones) -->
+      <div class="item-drag" draggable="true" data-match="Primavera">Primavera 🌼</div>
+      <div class="item-drag" draggable="true" data-match="Verano">Verano ☀️</div>
+      <div class="item-drag" draggable="true" data-match="Otoño">Otoño 🍂</div>
+      <div class="item-drag" draggable="true" data-match="Invierno">Invierno ❄️</div>
     </div>
-    <div class="feedback" id="seasonFeedback"></div>
+    <div class="zona-drag-drop">
+      <!-- Zonas de drop (descripciones) -->
+      <div class="zona-drop" data-expect="Primavera">[Árboles floreciendo]</div>
+      <div class="zona-drop" data-expect="Verano">[Niños en la playa]</div>
+      <div class="zona-drop" data-expect="Otoño">[Hojas secas]</div>
+      <div class="zona-drop" data-expect="Invierno">[Nieve]</div>
+    </div>
+    <div class="retroalimentacion" id="estacionesRetro"></div>
   </div>
 
-  <!-- =============== 3. Matching Columns: Fases de la Luna =============== -->
-  <div class="exercise-container">
-    <h2>3. Match the Moon Phases to the Emoji</h2>
-    <div class="match-columns" id="matchMoonPhases">
-      <!-- Phases to drag -->
-      <div class="match-list" id="moonItems">
-        <div class="match-item" draggable="true" data-phase="Luna Nueva">Luna Nueva</div>
-        <div class="match-item" draggable="true" data-phase="Cuarto Creciente">Cuarto Creciente</div>
-        <div class="match-item" draggable="true" data-phase="Luna Llena">Luna Llena</div>
-        <div class="match-item" draggable="true" data-phase="Cuarto Menguante">Cuarto Menguante</div>
-      </div>
-      <!-- Drop zones with emojis -->
-      <div class="match-list" id="moonTargets">
-        <div class="match-dropzone" data-match="Luna Nueva">🌑</div>
-        <div class="match-dropzone" data-match="Cuarto Creciente">🌓</div>
-        <div class="match-dropzone" data-match="Luna Llena">🌕</div>
-        <div class="match-dropzone" data-match="Cuarto Menguante">🌗</div>
-      </div>
+  <!-- ===============================
+       3. Relacionar columnas: Fases de la Luna
+  ================================ -->
+  <div class="contenedor-ejercicio" id="ejFasesLuna">
+    <h2>3. Relacionar: Fases de la Luna</h2>
+    <p>Arrastra el nombre de la fase a su emoji:</p>
+    <div class="zona-drag-drop">
+      <div class="item-drag" draggable="true" data-match="Luna Nueva">Luna Nueva</div>
+      <div class="item-drag" draggable="true" data-match="Cuarto Creciente">Cuarto Creciente</div>
+      <div class="item-drag" draggable="true" data-match="Luna Llena">Luna Llena</div>
+      <div class="item-drag" draggable="true" data-match="Cuarto Menguante">Cuarto Menguante</div>
     </div>
-    <div class="feedback" id="moonFeedback"></div>
+    <div class="zona-drag-drop">
+      <div class="zona-drop" data-expect="Luna Nueva">🌑</div>
+      <div class="zona-drop" data-expect="Cuarto Creciente">🌓</div>
+      <div class="zona-drop" data-expect="Luna Llena">🌕</div>
+      <div class="zona-drop" data-expect="Cuarto Menguante">🌗</div>
+    </div>
+    <div class="retroalimentacion" id="lunaRetro"></div>
   </div>
 
-  <!-- =============== 4. More Multiple Choice (Fechas, Días de Meses) =============== -->
-  <div class="exercise-container">
-    <h2>4. More Multiple Choice</h2>
-
-    <!-- Question about Fechas -->
+  <!-- ===============================
+       4. Verdadero / Falso
+  ================================ -->
+  <div class="contenedor-ejercicio">
+    <h2>4. Verdadero o Falso</h2>
     <div>
-      <h3>¿Cuándo empieza la primavera?</h3>
-      <div class="multiple-choice" data-correct="20 de marzo">
-        <div class="choice">20 de junio</div>
-        <div class="choice">20 de marzo</div>
-        <div class="choice">23 de septiembre</div>
-        <div class="choice">21 de diciembre</div>
+      <h3>La Tierra tarda 365 días en dar una vuelta al Sol.</h3>
+      <div class="verdadero-falso" data-correcto="Verdadero">
+        <div class="opcion">Verdadero</div>
+        <div class="opcion">Falso</div>
       </div>
-      <div class="feedback"></div>
+      <div class="retroalimentacion"></div>
     </div>
-    <div>
-      <h3>¿Cuándo empieza el otoño?</h3>
-      <div class="multiple-choice" data-correct="23 de septiembre">
-        <div class="choice">21 de junio</div>
-        <div class="choice">20 de marzo</div>
-        <div class="choice">23 de septiembre</div>
-        <div class="choice">22 de diciembre</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
-
-    <!-- Question about Días de Meses -->
-    <div>
-      <h3>¿Cuántos días tiene febrero en un año normal?</h3>
-      <div class="multiple-choice" data-correct="28">
-        <div class="choice">27</div>
-        <div class="choice">28</div>
-        <div class="choice">29</div>
-        <div class="choice">30</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
-    <div>
-      <h3>¿Cuántos días tiene diciembre?</h3>
-      <div class="multiple-choice" data-correct="31">
-        <div class="choice">28</div>
-        <div class="choice">29</div>
-        <div class="choice">30</div>
-        <div class="choice">31</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
-  </div>
-
-  <!-- =============== 5. True/False =============== -->
-  <div class="exercise-container">
-    <h2>5. True or False</h2>
-
-    <div>
-      <h3>La Tierra tarda 365 días en dar una vuelta completa alrededor del Sol.</h3>
-      <div class="true-false" data-correct="Verdadero">
-        <div class="tf-option">Verdadero</div>
-        <div class="tf-option">Falso</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
-
     <div>
       <h3>El Sol gira alrededor de la Tierra.</h3>
-      <div class="true-false" data-correct="Falso">
-        <div class="tf-option">Falso</div>
-        <div class="tf-option">Verdadero</div>
+      <div class="verdadero-falso" data-correcto="Falso">
+        <div class="opcion">Falso</div>
+        <div class="opcion">Verdadero</div>
       </div>
-      <div class="feedback"></div>
+      <div class="retroalimentacion"></div>
     </div>
   </div>
 
-  <!-- =============== 6. Reorder Planets =============== -->
-  <div class="exercise-container">
-    <h2>6. Reorder the Planets</h2>
-    <p>Drag each planet into the correct order from the Sun outward.</p>
-    <div class="reorder-planets-container" id="planetReorder">
-      <div class="planet" draggable="true" data-order="1">Mercurio</div>
-      <div class="planet" draggable="true" data-order="2">Venus</div>
-      <div class="planet" draggable="true" data-order="3">Tierra</div>
-      <div class="planet" draggable="true" data-order="4">Marte</div>
-      <div class="planet" draggable="true" data-order="5">Júpiter</div>
-      <div class="planet" draggable="true" data-order="6">Saturno</div>
-      <div class="planet" draggable="true" data-order="7">Urano</div>
-      <div class="planet" draggable="true" data-order="8">Neptuno</div>
-      <br>
-      <!-- Slots to drop planets in the correct order: 1..8 -->
-      <div class="planet-slot" data-expected="1">Slot 1</div>
-      <div class="planet-slot" data-expected="2">Slot 2</div>
-      <div class="planet-slot" data-expected="3">Slot 3</div>
-      <div class="planet-slot" data-expected="4">Slot 4</div>
-      <div class="planet-slot" data-expected="5">Slot 5</div>
-      <div class="planet-slot" data-expected="6">Slot 6</div>
-      <div class="planet-slot" data-expected="7">Slot 7</div>
-      <div class="planet-slot" data-expected="8">Slot 8</div>
+  <!-- ===============================
+       5. Reordenar Planetas
+  ================================ -->
+  <div class="contenedor-ejercicio">
+    <h2>5. Ordenar Planetas</h2>
+    <p>Arrastra los planetas en orden desde el más cercano al Sol hasta el más lejano:</p>
+    <div class="reordenar-contenedor">
+      <div class="planeta" draggable="true" data-orden="1">Mercurio</div>
+      <div class="planeta" draggable="true" data-orden="2">Venus</div>
+      <div class="planeta" draggable="true" data-orden="3">Tierra</div>
+      <div class="planeta" draggable="true" data-orden="4">Marte</div>
+      <div class="planeta" draggable="true" data-orden="5">Júpiter</div>
+      <div class="planeta" draggable="true" data-orden="6">Saturno</div>
+      <div class="planeta" draggable="true" data-orden="7">Urano</div>
+      <div class="planeta" draggable="true" data-orden="8">Neptuno</div>
     </div>
-    <div class="feedback" id="planetFeedback"></div>
+    <br>
+    <div class="reordenar-contenedor">
+      <div class="espacio-planeta" data-esperado="1">Slot 1</div>
+      <div class="espacio-planeta" data-esperado="2">Slot 2</div>
+      <div class="espacio-planeta" data-esperado="3">Slot 3</div>
+      <div class="espacio-planeta" data-esperado="4">Slot 4</div>
+      <div class="espacio-planeta" data-esperado="5">Slot 5</div>
+      <div class="espacio-planeta" data-esperado="6">Slot 6</div>
+      <div class="espacio-planeta" data-esperado="7">Slot 7</div>
+      <div class="espacio-planeta" data-esperado="8">Slot 8</div>
+    </div>
+    <div class="retroalimentacion" id="planetasRetro"></div>
   </div>
 
-  <!-- =============== 7. Interactive Moon Orbit =============== -->
-  <div class="exercise-container">
-    <h2>7. Interactive Moon Orbit</h2>
-    <p>Drag the Moon around the Earth to see different phases!</p>
-    <div class="orbit-container" id="orbitContainer">
-      <div class="earth">🌍</div>
-      <div class="moon" id="moon">🌕</div>
+  <!-- ===============================
+       6. Órbita Interactiva de la Luna
+  ================================ -->
+  <div class="contenedor-ejercicio">
+    <h2>6. Órbita Interactiva de la Luna</h2>
+    <p>Arrastra la Luna alrededor de la Tierra para ver las fases:</p>
+    <div class="orbita-contenedor" id="orbitaContenedor">
+      <div class="tierra">🌍</div>
+      <div class="luna" id="lunaEmoji">🌕</div>
     </div>
-    <div class="feedback" id="moonPhaseText"></div>
+    <div class="retroalimentacion" id="faseTexto"></div>
   </div>
 
   <script>
-    // =========================
-    //    1. Multiple Choice
-    // =========================
-    document.querySelectorAll('.multiple-choice').forEach(questionBlock => {
-      const correctAnswer = questionBlock.dataset.correct;
-      const choices = questionBlock.querySelectorAll('.choice');
-      const feedbackEl = questionBlock.parentElement.querySelector('.feedback');
-
-      choices.forEach(choice => {
-        choice.addEventListener('click', () => {
-          if (choice.textContent.trim() === correctAnswer) {
-            feedbackEl.textContent = 'Correct!';
-            feedbackEl.classList.remove('error');
-          } else {
-            feedbackEl.textContent = 'Try again!';
-            feedbackEl.classList.add('error');
-          }
-        });
-      });
-    });
-
-    // =========================
-    //    2 & 3. Matching
-    // =========================
-    // Generic Drag & Drop logic for match items
-    let draggedItem = null;
-
-    document.querySelectorAll('.match-item').forEach(item => {
-      item.addEventListener('dragstart', e => {
-        draggedItem = item;
-      });
-      item.addEventListener('dragend', e => {
-        draggedItem = null;
-      });
-    });
-
-    document.querySelectorAll('.match-dropzone').forEach(dropzone => {
-      dropzone.addEventListener('dragover', e => {
-        e.preventDefault();
-      });
-      dropzone.addEventListener('drop', e => {
-        e.preventDefault();
-        if (draggedItem) {
-          // Only allow one item in each dropzone
-          if (dropzone.childNodes.length === 1) {
-            dropzone.appendChild(draggedItem);
-          }
+  /*************************************
+   * 1. Opción Múltiple
+   *************************************/
+  document.querySelectorAll('.opciones').forEach((opcionesBlock) => {
+    const respCorrecta = opcionesBlock.dataset.correcta;
+    const retro = opcionesBlock.parentElement.querySelector('.retroalimentacion');
+    opcionesBlock.querySelectorAll('.opcion').forEach((opcion) => {
+      opcion.addEventListener('click', () => {
+        if(opcion.textContent.trim() === respCorrecta){
+          retro.textContent = "¡Correcto!";
+          retro.classList.add("correcto");
+          retro.classList.remove("error");
+        } else {
+          retro.textContent = "Inténtalo de nuevo.";
+          retro.classList.add("error");
+          retro.classList.remove("correcto");
         }
       });
     });
+  });
 
-    // Button or automatic check? 
-    // For simplicity, let's add a check after 2 seconds or you can add a "Check" button if desired
-    function checkMatch(dropzoneContainerSelector, feedbackSelector) {
-      const container = document.querySelector(dropzoneContainerSelector);
-      const dropzones = container.querySelectorAll('.match-dropzone');
-      let correctCount = 0;
-      dropzones.forEach(dz => {
-        const expected = dz.dataset.match;
-        const item = dz.querySelector('.match-item');
-        if (item && item.dataset.season === expected) { 
-          correctCount++;
-        } else if (item && item.dataset.phase === expected) {
-          correctCount++;
-        }
-      });
-      const feedbackEl = document.querySelector(feedbackSelector);
-      if (correctCount === dropzones.length) {
-        feedbackEl.textContent = 'All matches are correct!';
-        feedbackEl.classList.remove('error');
-      } else {
-        feedbackEl.textContent = 'Some matches are incorrect. Keep trying!';
-        feedbackEl.classList.add('error');
-      }
-    }
+  /*************************************
+   * 2 & 3. Relacionar columnas (Drag/Drop)
+   *************************************/
+  let itemArrastrado = null;
 
-    // Check matching after a small delay or with a manual approach
-    setInterval(() => {
-      checkMatch('#matchSeasons', '#seasonFeedback');
-      checkMatch('#matchMoonPhases', '#moonFeedback');
-    }, 2000);
-
-    // =========================
-    //    4. (More MC done above)
-    // =========================
-
-    // =========================
-    //    5. True/False
-    // =========================
-    document.querySelectorAll('.true-false').forEach(block => {
-      const correct = block.dataset.correct;
-      const options = block.querySelectorAll('.tf-option');
-      const feedbackEl = block.parentElement.querySelector('.feedback');
-
-      options.forEach(opt => {
-        opt.addEventListener('click', () => {
-          if (opt.textContent.trim() === correct) {
-            feedbackEl.textContent = 'Correct!';
-            feedbackEl.classList.remove('error');
-          } else {
-            feedbackEl.textContent = 'Try again!';
-            feedbackEl.classList.add('error');
-          }
-        });
-      });
+  // Al iniciar el arrastre
+  document.querySelectorAll('.item-drag').forEach((item) => {
+    item.addEventListener('dragstart', (e) => {
+      itemArrastrado = item;
     });
-
-    // =========================
-    //    6. Reorder Planets
-    // =========================
-    let draggedPlanet = null;
-    document.querySelectorAll('.planet').forEach(planet => {
-      planet.addEventListener('dragstart', e => {
-        draggedPlanet = planet;
-      });
-      planet.addEventListener('dragend', e => {
-        draggedPlanet = null;
-      });
+    item.addEventListener('dragend', (e) => {
+      itemArrastrado = null;
     });
+  });
 
-    document.querySelectorAll('.planet-slot').forEach(slot => {
-      slot.addEventListener('dragover', e => {
-        e.preventDefault();
-      });
-      slot.addEventListener('drop', e => {
-        e.preventDefault();
-        if (draggedPlanet) {
-          // If already has a child, replace it or do nothing
-          if (slot.childNodes.length === 1) {
-            slot.innerHTML = '';
-          }
-          slot.appendChild(draggedPlanet);
-        }
-      });
+  // Zonas de Drop
+  document.querySelectorAll('.zona-drop').forEach((zona) => {
+    zona.addEventListener('dragover', (e) => {
+      e.preventDefault();  // Permitir drop
     });
-
-    function checkPlanets() {
-      const slots = document.querySelectorAll('.planet-slot');
-      let correctCount = 0;
-      slots.forEach(slot => {
-        const expected = slot.dataset.expected;
-        const planet = slot.querySelector('.planet');
-        if (planet && planet.dataset.order === expected) {
-          correctCount++;
-        }
-      });
-      const feedback = document.getElementById('planetFeedback');
-      if (correctCount === slots.length) {
-        feedback.textContent = 'All planets are in correct order!';
-        feedback.classList.remove('error');
-      } else {
-        feedback.textContent = 'Some planets are not in the right spot yet!';
-        feedback.classList.add('error');
-      }
-    }
-
-    // Automatically check every 2s or add a button
-    setInterval(checkPlanets, 2000);
-
-    // =========================
-    //    7. Interactive Moon
-    // =========================
-    const moon = document.getElementById('moon');
-    const orbitContainer = document.getElementById('orbitContainer');
-    const phaseText = document.getElementById('moonPhaseText');
-
-    let isDragging = false;
-    let offsetX, offsetY;
-
-    // Helper to get the center of orbit container
-    const rect = orbitContainer.getBoundingClientRect();
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    moon.addEventListener('mousedown', startDrag);
-    moon.addEventListener('touchstart', startDrag, {passive: false});
-
-    function startDrag(e) {
+    zona.addEventListener('drop', (e) => {
       e.preventDefault();
-      isDragging = true;
-      if (e.type === 'touchstart') {
-        offsetX = e.touches[0].clientX - moon.getBoundingClientRect().left;
-        offsetY = e.touches[0].clientY - moon.getBoundingClientRect().top;
-      } else {
-        offsetX = e.clientX - moon.getBoundingClientRect().left;
-        offsetY = e.clientY - moon.getBoundingClientRect().top;
+      if(itemArrastrado){
+        // Si ya tenía algo adentro, lo reemplaza (opcional)
+        if(zona.children.length === 1){
+          zona.innerHTML = '';
+        }
+        zona.appendChild(itemArrastrado);
       }
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('touchmove', drag, {passive: false});
-      document.addEventListener('mouseup', endDrag);
-      document.addEventListener('touchend', endDrag);
-    }
+    });
+  });
 
-    function drag(e) {
-      if (!isDragging) return;
-      let clientX, clientY;
-      if (e.type === 'touchmove') {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
-      } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
+  // Función para checar si todo está correcto
+  function checarRelacion(contenedorID, retroID, tipoData) {
+    const contenedor = document.querySelector(contenedorID);
+    const drops = contenedor.querySelectorAll('.zona-drop');
+    let bien = 0;
+    drops.forEach((drop) => {
+      const esperado = drop.dataset.expect;
+      const itemDentro = drop.querySelector('.item-drag');
+      if(itemDentro && itemDentro.dataset.match === esperado){
+        bien++;
       }
-      const orbitRect = orbitContainer.getBoundingClientRect();
-      const x = clientX - orbitRect.left - offsetX;
-      const y = clientY - orbitRect.top - offsetY;
-
-      // Keep moon within orbit container
-      const radius = orbitRect.width / 2.2; // 2.2 to avoid overflow
-      const dx = x - centerX;
-      const dy = y - centerY;
-      const angle = Math.atan2(dy, dx);
-      const newX = centerX + radius * Math.cos(angle);
-      const newY = centerY + radius * Math.sin(angle);
-
-      moon.style.left = newX + 'px';
-      moon.style.top = newY + 'px';
-
-      updateMoonPhase(angle);
+    });
+    const retro = document.querySelector(retroID);
+    if(bien === drops.length){
+      retro.textContent = "¡Todas las correspondencias son correctas!";
+      retro.classList.remove("error");
+      retro.classList.add("correcto");
+    } else {
+      retro.textContent = "Algunas relaciones no coinciden. Sigue intentando.";
+      retro.classList.add("error");
+      retro.classList.remove("correcto");
     }
+  }
 
-    function endDrag() {
-      isDragging = false;
-      document.removeEventListener('mousemove', drag);
-      document.removeEventListener('touchmove', drag);
-    }
+  // Revisión cada 3s o con un botón si gustas
+  setInterval(() => {
+    checarRelacion('#ejEstaciones', '#estacionesRetro', 'season');
+    checarRelacion('#ejFasesLuna', '#lunaRetro', 'fase');
+  }, 3000);
 
-    function updateMoonPhase(angle) {
-      // angle in radians, from -pi to pi
-      // We can define rough quadrants
-      //  - pi/4 to pi/4 => "Luna Nueva" ...
-      //  This is just approximate logic for demonstration:
-      let phase = '';
-      // Convert angle to degrees
-      const deg = angle * (180 / Math.PI);
-      // deg around circle from -180 to 180
-      if (deg >= -45 && deg < 45) {
-        phase = 'Luna Nueva (🌑)';
-      } else if (deg >= 45 && deg < 135) {
-        phase = 'Cuarto Creciente (🌓)';
-      } else if (deg >= 135 || deg < -135) {
-        phase = 'Luna Llena (🌕)';
-      } else if (deg >= -135 && deg < -45) {
-        phase = 'Cuarto Menguante (🌗)';
+  /*************************************
+   * 4. Verdadero/Falso
+   *************************************/
+  document.querySelectorAll('.verdadero-falso').forEach((vfBlock) => {
+    const correcto = vfBlock.dataset.correcto;
+    const retro = vfBlock.parentElement.querySelector('.retroalimentacion');
+    vfBlock.querySelectorAll('.opcion').forEach((op) => {
+      op.addEventListener('click', () => {
+        if(op.textContent.trim() === correcto){
+          retro.textContent = "¡Correcto!";
+          retro.classList.remove("error");
+          retro.classList.add("correcto");
+        } else {
+          retro.textContent = "Inténtalo de nuevo.";
+          retro.classList.add("error");
+          retro.classList.remove("correcto");
+        }
+      });
+    });
+  });
+
+  /*************************************
+   * 5. Reordenar Planetas
+   *************************************/
+  let planetaArrastrado = null;
+  document.querySelectorAll('.planeta').forEach((planeta) => {
+    planeta.addEventListener('dragstart', () => {
+      planetaArrastrado = planeta;
+    });
+    planeta.addEventListener('dragend', () => {
+      planetaArrastrado = null;
+    });
+  });
+
+  document.querySelectorAll('.espacio-planeta').forEach((espacio) => {
+    espacio.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+    espacio.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if(planetaArrastrado){
+        // Reemplazar si ya existía algo
+        if(espacio.children.length === 1){
+          espacio.innerHTML = '';
+        }
+        espacio.appendChild(planetaArrastrado);
       }
-      phaseText.textContent = 'Current Phase: ' + phase;
+    });
+  });
+
+  function checarPlanetas() {
+    const slots = document.querySelectorAll('.espacio-planeta');
+    let aciertos = 0;
+    slots.forEach((slot) => {
+      const esperado = slot.dataset.esperado;
+      const actual = slot.querySelector('.planeta');
+      if(actual && actual.dataset.orden === esperado){
+        aciertos++;
+      }
+    });
+    const retroPlanetas = document.getElementById('planetasRetro');
+    if(aciertos === slots.length){
+      retroPlanetas.textContent = "¡Todos los planetas están en el orden correcto!";
+      retroPlanetas.classList.remove("error");
+      retroPlanetas.classList.add("correcto");
+    } else {
+      retroPlanetas.textContent = "Algunos planetas no están en el orden correcto.";
+      retroPlanetas.classList.add("error");
+      retroPlanetas.classList.remove("correcto");
     }
+  }
+  setInterval(checarPlanetas, 3000);
+
+  /*************************************
+   * 6. Órbita Interactiva de la Luna
+   *************************************/
+  const luna = document.getElementById('lunaEmoji');
+  const orbita = document.getElementById('orbitaContenedor');
+  const textoFase = document.getElementById('faseTexto');
+
+  let tocando = false;
+  let offsetX = 0, offsetY = 0;
+
+  // Para centrar cálculos
+  function obtenerCentro() {
+    const rect = orbita.getBoundingClientRect();
+    return {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+      radio: rect.width / 2.2
+    };
+  }
+
+  function iniciarArrastre(e) {
+    e.preventDefault();
+    tocando = true;
+    if(e.type === 'touchstart'){
+      offsetX = e.touches[0].clientX - luna.getBoundingClientRect().left;
+      offsetY = e.touches[0].clientY - luna.getBoundingClientRect().top;
+    } else {
+      offsetX = e.clientX - luna.getBoundingClientRect().left;
+      offsetY = e.clientY - luna.getBoundingClientRect().top;
+    }
+    document.addEventListener('mousemove', moverLuna);
+    document.addEventListener('touchmove', moverLuna, {passive:false});
+    document.addEventListener('mouseup', soltarLuna);
+    document.addEventListener('touchend', soltarLuna);
+  }
+
+  function moverLuna(e) {
+    if(!tocando) return;
+    let clientX, clientY;
+    if(e.type === 'touchmove'){
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    const {x, y, radio} = obtenerCentro();
+    const dx = clientX - x - offsetX;
+    const dy = clientY - y - offsetY;
+    const angulo = Math.atan2(dy, dx);  // En radianes
+
+    // Calcular nueva posición en el círculo
+    const nuevoX = x + radio * Math.cos(angulo);
+    const nuevoY = y + radio * Math.sin(angulo);
+
+    // Aplicar a la Luna
+    luna.style.left = (nuevoX - orbita.getBoundingClientRect().left) + 'px';
+    luna.style.top = (nuevoY - orbita.getBoundingClientRect().top) + 'px';
+
+    actualizarFaseLunar(angulo);
+  }
+
+  function soltarLuna() {
+    tocando = false;
+    document.removeEventListener('mousemove', moverLuna);
+    document.removeEventListener('touchmove', moverLuna);
+  }
+
+  function actualizarFaseLunar(rads) {
+    // Convertir ángulo de [-180, 180] en grados a [0..360)
+    let deg = rads * (180 / Math.PI);
+    if(deg < 0) deg = 360 + deg;
+
+    // Dividir el círculo en 4 secciones (90° cada una)
+    let fase = "";
+    let emoji = "";
+    if(deg >= 0 && deg < 90) {
+      fase = "Cuarto Creciente";
+      emoji = "🌓";
+    } else if(deg >= 90 && deg < 180) {
+      fase = "Luna Llena";
+      emoji = "🌕";
+    } else if(deg >= 180 && deg < 270) {
+      fase = "Cuarto Menguante";
+      emoji = "🌗";
+    } else {
+      fase = "Luna Nueva";
+      emoji = "🌑";
+    }
+
+    // Cambiar el emoji y el texto
+    luna.textContent = emoji;
+    textoFase.textContent = "Fase actual: " + fase;
+  }
+
+  // Listeners para arrastre de la Luna
+  luna.addEventListener('mousedown', iniciarArrastre);
+  luna.addEventListener('touchstart', iniciarArrastre, {passive:false});
   </script>
 </body>
 </html>
