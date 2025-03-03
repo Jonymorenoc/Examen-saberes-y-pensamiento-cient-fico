@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, 
-                 maximum-scale=1.0, user-scalable=no">
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Ejercicios Interactivos</title>
   <style>
-    /* ==== Estilos Móviles Básicos ==== */
+    /* ==================== Estilos básicos MOBILE-FIRST ==================== */
     * {
       margin: 0; padding: 0; box-sizing: border-box;
     }
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
+      background-color: #f4f4f4;
       color: #333;
-      max-width: 480px;  /* Para visualización en desktop, pero mantenemos enfoque mobile */
+      max-width: 480px;  /* Para que en desktop se vea centrado. Mobile-first real. */
       margin: auto;
       padding: 10px;
     }
@@ -23,18 +22,41 @@
       text-align: center;
       margin: 20px 0 10px 0;
     }
-    .contenedor-ejercicio {
+    h3 {
+      margin: 10px 0;
+    }
+
+    /* Contenedor genérico de cada pantalla/ejercicio */
+    .pantalla {
+      display: none; /* Ocultamos todas por defecto, se mostrará la activa con JS */
+      min-height: 80vh; /* Para que ocupe casi toda la pantalla */
       background: #fff;
+      margin: 10px 0;
       padding: 15px;
-      margin: 15px 0;
       border-radius: 6px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      position: relative; /* Para botones “Siguiente” o “Anterior” */
     }
-    .contenedor-ejercicio h3 {
-      margin-bottom: 10px;
+
+    /* Botón de navegación */
+    .btn-nav {
+      display: inline-block;
+      background: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin: 20px 10px 0 10px;
+      text-align: center;
+      cursor: pointer;
     }
-    .retroalimentacion {
-      margin-top: 5px;
+    .btn-nav:hover {
+      background: #0056b3;
+    }
+
+    /* Retroalimentación */
+    .retro {
+      margin-top: 8px;
       font-weight: bold;
     }
     .error {
@@ -44,46 +66,45 @@
       color: green;
     }
 
-    /* ==== Botones grandes para móvil (opción múltiple) ==== */
+    /* Estilos para Opción Múltiple */
     .opciones {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      margin: 10px 0;
     }
     .opcion {
       background: #e9e9e9;
       padding: 10px;
       border-radius: 4px;
       cursor: pointer;
-      transition: background 0.3s;
       text-align: center;
     }
     .opcion:hover {
-      background: #dcdcdc;
+      background: #ddd;
     }
 
-    /* ==== Verdadero/Falso ==== */
+    /* Estilos para Verdadero/Falso */
     .verdadero-falso {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 10px;
     }
 
-    /* ==== Drag & Drop: Relacionar columnas ==== */
+    /* Estilos Relacionar Columnas (Drag & Drop) */
     .zona-drag-drop {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
       justify-content: center;
-      margin-top: 10px;
+      gap: 10px;
+      margin: 10px 0;
     }
     .item-drag {
       background: #fafafa;
       border: 2px dashed #aaa;
       border-radius: 5px;
       padding: 10px;
-      min-width: 100px;
+      min-width: 120px;
       text-align: center;
       cursor: grab;
     }
@@ -100,7 +121,7 @@
       text-align: center;
     }
 
-    /* ==== Órbita de la Luna (interactiva) ==== */
+    /* Órbita Interactiva de la Luna */
     .orbita-contenedor {
       position: relative;
       width: 250px;
@@ -112,25 +133,21 @@
     }
     .tierra {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       font-size: 2rem;
     }
     .luna {
       position: absolute;
-      width: 40px; 
-      height: 40px;
+      width: 40px; height: 40px;
       font-size: 2rem;
       cursor: pointer;
       user-select: none;
       transform: translate(-50%, -50%);
-      /* Posición inicial (lado derecho) */
-      top: 50%;
-      left: 90%;
+      top: 50%; left: 90%;
     }
 
-    /* ==== Reordenar Planetas ==== */
+    /* Reordenar Planetas */
     .reordenar-contenedor {
       display: flex;
       flex-direction: column;
@@ -138,13 +155,13 @@
       gap: 5px;
     }
     .planeta, .espacio-planeta {
-      width: 80%;
-      max-width: 300px;
       background: #eee;
       border: 1px solid #ccc;
       border-radius: 4px;
       padding: 8px;
       text-align: center;
+      width: 80%;
+      max-width: 300px;
       margin: 0 auto;
     }
     .planeta {
@@ -157,76 +174,86 @@
 </head>
 <body>
 
-  <h1>Ejercicios Interactivos</h1>
+  <h1>🌟 Ejercicios Interactivos 🌟</h1>
 
-  <!-- ===============================
-       1. Opción múltiple: Sistema Solar
-  ================================ -->
-  <div class="contenedor-ejercicio">
-    <h2>1. Opción Múltiple: Sistema Solar</h2>
+  <!-- PANTALLA 1: Opción Múltiple (Sistema Solar) -->
+  <section class="pantalla" id="pantalla1">
+    <h2>1️⃣ Opción Múltiple: Sistema Solar</h2>
+    <h3>¿De dónde viene la luz de la Luna? 🌙</h3>
+    <div class="opciones" data-correcta="Del Sol">
+      <div class="opcion">De la Tierra</div>
+      <div class="opcion">De Marte</div>
+      <div class="opcion">Del Sol</div>
+      <div class="opcion">De Júpiter</div>
+    </div>
+    <div class="retro"></div>
+
+    <h3>¿Cuál es la estrella más grande de nuestro sistema solar? 🌟</h3>
+    <div class="opciones" data-correcta="El Sol">
+      <div class="opcion">La Luna</div>
+      <div class="opcion">Saturno</div>
+      <div class="opcion">El Sol</div>
+      <div class="opcion">Urano</div>
+    </div>
+    <div class="retro"></div>
+
+    <h3>¿Cuántos planetas giran alrededor del Sol? 🪐</h3>
+    <div class="opciones" data-correcta="8">
+      <div class="opcion">7</div>
+      <div class="opcion">8</div>
+      <div class="opcion">9</div>
+      <div class="opcion">10</div>
+    </div>
+    <div class="retro"></div>
 
     <div>
-      <h3>¿De dónde viene la luz de la Luna?</h3>
-      <div class="opciones" data-correcta="Del Sol">
-        <div class="opcion">De la Tierra</div>
-        <div class="opcion">De Marte</div>
-        <div class="opcion">Del Sol</div>
-        <div class="opcion">De Júpiter</div>
-      </div>
-      <div class="retroalimentacion"></div>
+      <span class="btn-nav" onclick="cambiarPantalla(2)">Siguiente ➡️</span>
     </div>
+  </section>
+
+  <!-- PANTALLA 2: Órbita Interactiva de la Luna -->
+  <section class="pantalla" id="pantalla2">
+    <h2>2️⃣ Órbita Interactiva de la Luna 🌏</h2>
+    <p>Arrastra la Luna alrededor de la Tierra para ver las fases.</p>
+    <div class="orbita-contenedor" id="orbitaContenedor">
+      <div class="tierra">🌍</div>
+      <div class="luna" id="lunaEmoji">🌕</div>
+    </div>
+    <div class="retro" id="faseTexto"></div>
 
     <div>
-      <h3>¿Cuál es la estrella más grande de nuestro sistema solar?</h3>
-      <div class="opciones" data-correcta="El Sol">
-        <div class="opcion">La Luna</div>
-        <div class="opcion">Saturno</div>
-        <div class="opcion">El Sol</div>
-        <div class="opcion">Urano</div>
-      </div>
-      <div class="retroalimentacion"></div>
+      <span class="btn-nav" onclick="cambiarPantalla(1)">⬅️ Anterior</span>
+      <span class="btn-nav" onclick="cambiarPantalla(3)">Siguiente ➡️</span>
     </div>
+  </section>
 
-    <div>
-      <h3>¿Cuántos planetas giran alrededor del Sol?</h3>
-      <div class="opciones" data-correcta="8">
-        <div class="opcion">7</div>
-        <div class="opcion">8</div>
-        <div class="opcion">9</div>
-        <div class="opcion">10</div>
-      </div>
-      <div class="retroalimentacion"></div>
-    </div>
-  </div>
-
-  <!-- ===============================
-       2. Relacionar columnas: Estaciones
-  ================================ -->
-  <div class="contenedor-ejercicio" id="ejEstaciones">
-    <h2>2. Relacionar: Estaciones del Año</h2>
-    <p>Arrastra la estación hacia la descripción correspondiente:</p>
+  <!-- PANTALLA 3: Relacionar Columnas (Estaciones) -->
+  <section class="pantalla" id="pantalla3">
+    <h2>3️⃣ Relacionar: Estaciones del Año 🍂</h2>
+    <p>Arrastra la estación hacia la descripción correcta:</p>
     <div class="zona-drag-drop">
-      <!-- Elementos a arrastrar (estaciones) -->
       <div class="item-drag" draggable="true" data-match="Primavera">Primavera 🌼</div>
       <div class="item-drag" draggable="true" data-match="Verano">Verano ☀️</div>
       <div class="item-drag" draggable="true" data-match="Otoño">Otoño 🍂</div>
       <div class="item-drag" draggable="true" data-match="Invierno">Invierno ❄️</div>
     </div>
     <div class="zona-drag-drop">
-      <!-- Zonas de drop (descripciones) -->
-      <div class="zona-drop" data-expect="Primavera">[Árboles floreciendo]</div>
+      <div class="zona-drop" data-expect="Primavera">[Flores y árboles verdes]</div>
       <div class="zona-drop" data-expect="Verano">[Niños en la playa]</div>
       <div class="zona-drop" data-expect="Otoño">[Hojas secas]</div>
-      <div class="zona-drop" data-expect="Invierno">[Nieve]</div>
+      <div class="zona-drop" data-expect="Invierno">[Nieve y frío]</div>
     </div>
-    <div class="retroalimentacion" id="estacionesRetro"></div>
-  </div>
+    <div class="retro" id="retroEstaciones"></div>
 
-  <!-- ===============================
-       3. Relacionar columnas: Fases de la Luna
-  ================================ -->
-  <div class="contenedor-ejercicio" id="ejFasesLuna">
-    <h2>3. Relacionar: Fases de la Luna</h2>
+    <div>
+      <span class="btn-nav" onclick="cambiarPantalla(2)">⬅️ Anterior</span>
+      <span class="btn-nav" onclick="cambiarPantalla(4)">Siguiente ➡️</span>
+    </div>
+  </section>
+
+  <!-- PANTALLA 4: Relacionar Columnas (Fases de la Luna) -->
+  <section class="pantalla" id="pantalla4">
+    <h2>4️⃣ Relacionar: Fases de la Luna 🌖</h2>
     <p>Arrastra el nombre de la fase a su emoji:</p>
     <div class="zona-drag-drop">
       <div class="item-drag" draggable="true" data-match="Luna Nueva">Luna Nueva</div>
@@ -240,38 +267,74 @@
       <div class="zona-drop" data-expect="Luna Llena">🌕</div>
       <div class="zona-drop" data-expect="Cuarto Menguante">🌗</div>
     </div>
-    <div class="retroalimentacion" id="lunaRetro"></div>
-  </div>
+    <div class="retro" id="retroLuna"></div>
 
-  <!-- ===============================
-       4. Verdadero / Falso
-  ================================ -->
-  <div class="contenedor-ejercicio">
-    <h2>4. Verdadero o Falso</h2>
     <div>
-      <h3>La Tierra tarda 365 días en dar una vuelta al Sol.</h3>
+      <span class="btn-nav" onclick="cambiarPantalla(3)">⬅️ Anterior</span>
+      <span class="btn-nav" onclick="cambiarPantalla(5)">Siguiente ➡️</span>
+    </div>
+  </section>
+
+  <!-- PANTALLA 5: Opción Múltiple (Fechas Importantes) -->
+  <section class="pantalla" id="pantalla5">
+    <h2>5️⃣ Opción Múltiple: Fechas Importantes 📅</h2>
+    <h3>¿Cuándo empieza la primavera? 🌸</h3>
+    <div class="opciones" data-correcta="20 de marzo">
+      <div class="opcion">20 de junio</div>
+      <div class="opcion">20 de marzo</div>
+      <div class="opcion">23 de septiembre</div>
+      <div class="opcion">21 de diciembre</div>
+    </div>
+    <div class="retro"></div>
+
+    <h3>¿Cuándo empieza el otoño? 🍁</h3>
+    <div class="opciones" data-correcta="23 de septiembre">
+      <div class="opcion">21 de junio</div>
+      <div class="opcion">20 de marzo</div>
+      <div class="opcion">23 de septiembre</div>
+      <div class="opcion">22 de diciembre</div>
+    </div>
+    <div class="retro"></div>
+
+    <div>
+      <span class="btn-nav" onclick="cambiarPantalla(4)">⬅️ Anterior</span>
+      <span class="btn-nav" onclick="cambiarPantalla(6)">Siguiente ➡️</span>
+    </div>
+  </section>
+
+  <!-- PANTALLA 6: Verdadero o Falso -->
+  <section class="pantalla" id="pantalla6">
+    <h2>6️⃣ Verdadero o Falso ✅❌</h2>
+
+    <div>
+      <h3>La Tierra tarda 365 días en dar una vuelta al Sol. 🌍</h3>
       <div class="verdadero-falso" data-correcto="Verdadero">
         <div class="opcion">Verdadero</div>
         <div class="opcion">Falso</div>
       </div>
-      <div class="retroalimentacion"></div>
+      <div class="retro"></div>
     </div>
+
     <div>
-      <h3>El Sol gira alrededor de la Tierra.</h3>
+      <h3>El Sol gira alrededor de la Tierra. ☀️</h3>
       <div class="verdadero-falso" data-correcto="Falso">
         <div class="opcion">Falso</div>
         <div class="opcion">Verdadero</div>
       </div>
-      <div class="retroalimentacion"></div>
+      <div class="retro"></div>
     </div>
-  </div>
 
-  <!-- ===============================
-       5. Reordenar Planetas
-  ================================ -->
-  <div class="contenedor-ejercicio">
-    <h2>5. Ordenar Planetas</h2>
-    <p>Arrastra los planetas en orden desde el más cercano al Sol hasta el más lejano:</p>
+    <div>
+      <span class="btn-nav" onclick="cambiarPantalla(5)">⬅️ Anterior</span>
+      <span class="btn-nav" onclick="cambiarPantalla(7)">Siguiente ➡️</span>
+    </div>
+  </section>
+
+  <!-- PANTALLA 7: Ordenar los Planetas -->
+  <section class="pantalla" id="pantalla7">
+    <h2>7️⃣ Ordenar los Planetas 🪐</h2>
+    <p>Arrastra cada planeta a su posición correcta (desde el Sol hacia afuera):</p>
+
     <div class="reordenar-contenedor">
       <div class="planeta" draggable="true" data-orden="1">Mercurio</div>
       <div class="planeta" draggable="true" data-orden="2">Venus</div>
@@ -293,120 +356,76 @@
       <div class="espacio-planeta" data-esperado="7">Slot 7</div>
       <div class="espacio-planeta" data-esperado="8">Slot 8</div>
     </div>
-    <div class="retroalimentacion" id="planetasRetro"></div>
-  </div>
+    <div class="retro" id="retroPlanetas"></div>
 
-  <!-- ===============================
-       6. Órbita Interactiva de la Luna
-  ================================ -->
-  <div class="contenedor-ejercicio">
-    <h2>6. Órbita Interactiva de la Luna</h2>
-    <p>Arrastra la Luna alrededor de la Tierra para ver las fases:</p>
-    <div class="orbita-contenedor" id="orbitaContenedor">
-      <div class="tierra">🌍</div>
-      <div class="luna" id="lunaEmoji">🌕</div>
+    <div>
+      <span class="btn-nav" onclick="cambiarPantalla(6)">⬅️ Anterior</span>
+      <span class="btn-nav" onclick="cambiarPantalla(8)">Siguiente ➡️</span>
     </div>
-    <div class="retroalimentacion" id="faseTexto"></div>
-  </div>
+  </section>
+
+  <!-- PANTALLA 8: Opción Múltiple (Días de los Meses) -->
+  <section class="pantalla" id="pantalla8">
+    <h2>8️⃣ Opción Múltiple: Días de los Meses 📆</h2>
+
+    <h3>¿Cuántos días tiene febrero en un año normal? ❓</h3>
+    <div class="opciones" data-correcta="28">
+      <div class="opcion">27</div>
+      <div class="opcion">28</div>
+      <div class="opcion">29</div>
+      <div class="opcion">30</div>
+    </div>
+    <div class="retro"></div>
+
+    <h3>¿Cuántos días tiene diciembre? ❄️</h3>
+    <div class="opciones" data-correcta="31">
+      <div class="opcion">28</div>
+      <div class="opcion">29</div>
+      <div class="opcion">30</div>
+      <div class="opcion">31</div>
+    </div>
+    <div class="retro"></div>
+
+    <div>
+      <span class="btn-nav" onclick="cambiarPantalla(7)">⬅️ Anterior</span>
+      <!-- Podrías cerrar o repetir, aquí termina -->
+    </div>
+  </section>
 
   <script>
-  /*************************************
+  /*****************************************************
+   * Control de Pantallas: Mostrar solo la activa
+   *****************************************************/
+  let pantallaActual = 1; // Inicia en la pantalla 1
+  mostrarPantalla(pantallaActual);
+
+  function mostrarPantalla(num) {
+    const pantallas = document.querySelectorAll('.pantalla');
+    pantallas.forEach((p) => p.style.display = 'none');
+    const id = '#pantalla' + num;
+    const pantalla = document.querySelector(id);
+    if(pantalla) pantalla.style.display = 'block';
+  }
+
+  function cambiarPantalla(num) {
+    pantallaActual = num;
+    mostrarPantalla(pantallaActual);
+  }
+
+  /*****************************************************
    * 1. Opción Múltiple
-   *************************************/
-  document.querySelectorAll('.opciones').forEach((opcionesBlock) => {
-    const respCorrecta = opcionesBlock.dataset.correcta;
-    const retro = opcionesBlock.parentElement.querySelector('.retroalimentacion');
-    opcionesBlock.querySelectorAll('.opcion').forEach((opcion) => {
-      opcion.addEventListener('click', () => {
-        if(opcion.textContent.trim() === respCorrecta){
-          retro.textContent = "¡Correcto!";
-          retro.classList.add("correcto");
-          retro.classList.remove("error");
-        } else {
-          retro.textContent = "Inténtalo de nuevo.";
-          retro.classList.add("error");
-          retro.classList.remove("correcto");
-        }
-      });
-    });
-  });
-
-  /*************************************
-   * 2 & 3. Relacionar columnas (Drag/Drop)
-   *************************************/
-  let itemArrastrado = null;
-
-  // Al iniciar el arrastre
-  document.querySelectorAll('.item-drag').forEach((item) => {
-    item.addEventListener('dragstart', (e) => {
-      itemArrastrado = item;
-    });
-    item.addEventListener('dragend', (e) => {
-      itemArrastrado = null;
-    });
-  });
-
-  // Zonas de Drop
-  document.querySelectorAll('.zona-drop').forEach((zona) => {
-    zona.addEventListener('dragover', (e) => {
-      e.preventDefault();  // Permitir drop
-    });
-    zona.addEventListener('drop', (e) => {
-      e.preventDefault();
-      if(itemArrastrado){
-        // Si ya tenía algo adentro, lo reemplaza (opcional)
-        if(zona.children.length === 1){
-          zona.innerHTML = '';
-        }
-        zona.appendChild(itemArrastrado);
-      }
-    });
-  });
-
-  // Función para checar si todo está correcto
-  function checarRelacion(contenedorID, retroID, tipoData) {
-    const contenedor = document.querySelector(contenedorID);
-    const drops = contenedor.querySelectorAll('.zona-drop');
-    let bien = 0;
-    drops.forEach((drop) => {
-      const esperado = drop.dataset.expect;
-      const itemDentro = drop.querySelector('.item-drag');
-      if(itemDentro && itemDentro.dataset.match === esperado){
-        bien++;
-      }
-    });
-    const retro = document.querySelector(retroID);
-    if(bien === drops.length){
-      retro.textContent = "¡Todas las correspondencias son correctas!";
-      retro.classList.remove("error");
-      retro.classList.add("correcto");
-    } else {
-      retro.textContent = "Algunas relaciones no coinciden. Sigue intentando.";
-      retro.classList.add("error");
-      retro.classList.remove("correcto");
-    }
-  }
-
-  // Revisión cada 3s o con un botón si gustas
-  setInterval(() => {
-    checarRelacion('#ejEstaciones', '#estacionesRetro', 'season');
-    checarRelacion('#ejFasesLuna', '#lunaRetro', 'fase');
-  }, 3000);
-
-  /*************************************
-   * 4. Verdadero/Falso
-   *************************************/
-  document.querySelectorAll('.verdadero-falso').forEach((vfBlock) => {
-    const correcto = vfBlock.dataset.correcto;
-    const retro = vfBlock.parentElement.querySelector('.retroalimentacion');
-    vfBlock.querySelectorAll('.opcion').forEach((op) => {
+   *****************************************************/
+  document.querySelectorAll('.opciones').forEach((grupo) => {
+    const correcta = grupo.dataset.correcta;
+    const retro = grupo.parentElement.querySelector('.retro');
+    grupo.querySelectorAll('.opcion').forEach((op) => {
       op.addEventListener('click', () => {
-        if(op.textContent.trim() === correcto){
-          retro.textContent = "¡Correcto!";
-          retro.classList.remove("error");
+        if(op.textContent.trim() === correcta){
+          retro.textContent = "¡Correcto! ✅";
           retro.classList.add("correcto");
+          retro.classList.remove("error");
         } else {
-          retro.textContent = "Inténtalo de nuevo.";
+          retro.textContent = "Intenta de nuevo. ❌";
           retro.classList.add("error");
           retro.classList.remove("correcto");
         }
@@ -414,134 +433,78 @@
     });
   });
 
-  /*************************************
-   * 5. Reordenar Planetas
-   *************************************/
-  let planetaArrastrado = null;
-  document.querySelectorAll('.planeta').forEach((planeta) => {
-    planeta.addEventListener('dragstart', () => {
-      planetaArrastrado = planeta;
-    });
-    planeta.addEventListener('dragend', () => {
-      planetaArrastrado = null;
-    });
-  });
-
-  document.querySelectorAll('.espacio-planeta').forEach((espacio) => {
-    espacio.addEventListener('dragover', (e) => {
-      e.preventDefault();
-    });
-    espacio.addEventListener('drop', (e) => {
-      e.preventDefault();
-      if(planetaArrastrado){
-        // Reemplazar si ya existía algo
-        if(espacio.children.length === 1){
-          espacio.innerHTML = '';
-        }
-        espacio.appendChild(planetaArrastrado);
-      }
-    });
-  });
-
-  function checarPlanetas() {
-    const slots = document.querySelectorAll('.espacio-planeta');
-    let aciertos = 0;
-    slots.forEach((slot) => {
-      const esperado = slot.dataset.esperado;
-      const actual = slot.querySelector('.planeta');
-      if(actual && actual.dataset.orden === esperado){
-        aciertos++;
-      }
-    });
-    const retroPlanetas = document.getElementById('planetasRetro');
-    if(aciertos === slots.length){
-      retroPlanetas.textContent = "¡Todos los planetas están en el orden correcto!";
-      retroPlanetas.classList.remove("error");
-      retroPlanetas.classList.add("correcto");
-    } else {
-      retroPlanetas.textContent = "Algunos planetas no están en el orden correcto.";
-      retroPlanetas.classList.add("error");
-      retroPlanetas.classList.remove("correcto");
-    }
-  }
-  setInterval(checarPlanetas, 3000);
-
-  /*************************************
-   * 6. Órbita Interactiva de la Luna
-   *************************************/
+  /*****************************************************
+   * 2. Órbita Interactiva de la Luna
+   *****************************************************/
   const luna = document.getElementById('lunaEmoji');
   const orbita = document.getElementById('orbitaContenedor');
   const textoFase = document.getElementById('faseTexto');
 
-  let tocando = false;
+  let arrastrandoLuna = false;
   let offsetX = 0, offsetY = 0;
 
-  // Para centrar cálculos
   function obtenerCentro() {
     const rect = orbita.getBoundingClientRect();
     return {
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2,
+      x: rect.left + rect.width/2,
+      y: rect.top + rect.height/2,
       radio: rect.width / 2.2
     };
   }
 
   function iniciarArrastre(e) {
     e.preventDefault();
-    tocando = true;
-    if(e.type === 'touchstart'){
+    arrastrandoLuna = true;
+    if(e.type === 'touchstart') {
       offsetX = e.touches[0].clientX - luna.getBoundingClientRect().left;
       offsetY = e.touches[0].clientY - luna.getBoundingClientRect().top;
     } else {
       offsetX = e.clientX - luna.getBoundingClientRect().left;
       offsetY = e.clientY - luna.getBoundingClientRect().top;
     }
-    document.addEventListener('mousemove', moverLuna);
-    document.addEventListener('touchmove', moverLuna, {passive:false});
+    document.addEventListener('mousemove', moverLuna, {passive: false});
+    document.addEventListener('touchmove', moverLuna, {passive: false});
     document.addEventListener('mouseup', soltarLuna);
     document.addEventListener('touchend', soltarLuna);
   }
 
   function moverLuna(e) {
-    if(!tocando) return;
+    if(!arrastrandoLuna) return;
     let clientX, clientY;
-    if(e.type === 'touchmove'){
+    if(e.type === 'touchmove') {
       clientX = e.touches[0].clientX;
       clientY = e.touches[0].clientY;
     } else {
       clientX = e.clientX;
       clientY = e.clientY;
     }
-    const {x, y, radio} = obtenerCentro();
+    const { x, y, radio } = obtenerCentro();
     const dx = clientX - x - offsetX;
     const dy = clientY - y - offsetY;
-    const angulo = Math.atan2(dy, dx);  // En radianes
+    const angulo = Math.atan2(dy, dx);
 
-    // Calcular nueva posición en el círculo
     const nuevoX = x + radio * Math.cos(angulo);
     const nuevoY = y + radio * Math.sin(angulo);
 
-    // Aplicar a la Luna
-    luna.style.left = (nuevoX - orbita.getBoundingClientRect().left) + 'px';
-    luna.style.top = (nuevoY - orbita.getBoundingClientRect().top) + 'px';
+    const orbitaRect = orbita.getBoundingClientRect();
+    luna.style.left = (nuevoX - orbitaRect.left) + 'px';
+    luna.style.top  = (nuevoY - orbitaRect.top) + 'px';
 
     actualizarFaseLunar(angulo);
   }
 
   function soltarLuna() {
-    tocando = false;
+    arrastrandoLuna = false;
     document.removeEventListener('mousemove', moverLuna);
     document.removeEventListener('touchmove', moverLuna);
   }
 
   function actualizarFaseLunar(rads) {
-    // Convertir ángulo de [-180, 180] en grados a [0..360)
-    let deg = rads * (180 / Math.PI);
+    let deg = rads * (180/Math.PI);
     if(deg < 0) deg = 360 + deg;
 
-    // Dividir el círculo en 4 secciones (90° cada una)
-    let fase = "";
-    let emoji = "";
+    // Cuatro divisiones ~90° cada una
+    let fase = "", emoji = "";
     if(deg >= 0 && deg < 90) {
       fase = "Cuarto Creciente";
       emoji = "🌓";
@@ -555,15 +518,141 @@
       fase = "Luna Nueva";
       emoji = "🌑";
     }
-
-    // Cambiar el emoji y el texto
     luna.textContent = emoji;
-    textoFase.textContent = "Fase actual: " + fase;
+    textoFase.textContent = `Fase actual: ${fase}`;
   }
 
-  // Listeners para arrastre de la Luna
   luna.addEventListener('mousedown', iniciarArrastre);
   luna.addEventListener('touchstart', iniciarArrastre, {passive:false});
+
+  /*****************************************************
+   * 3 & 4. Drag & Drop para Estaciones y Fases de la Luna
+   *****************************************************/
+  let itemArrastrado = null;
+  document.querySelectorAll('.item-drag').forEach(item => {
+    item.addEventListener('dragstart', () => { itemArrastrado = item; });
+    item.addEventListener('dragend', () => { itemArrastrado = null; });
+  });
+
+  document.querySelectorAll('.zona-drop').forEach(zona => {
+    zona.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+    zona.addEventListener('drop', e => {
+      e.preventDefault();
+      if(itemArrastrado){
+        // Para evitar que desaparezca el elemento, 
+        // solo lo colocamos si la zona está vacía
+        if(zona.children.length === 0){
+          zona.appendChild(itemArrastrado);
+        }
+      }
+    });
+  });
+
+  function checarRelacion(idContenedor, idRetro) {
+    const contenedor = document.querySelector(idContenedor);
+    const drops = contenedor.querySelectorAll('.zona-drop');
+    let correctos = 0;
+    drops.forEach(d => {
+      const esperado = d.dataset.expect;
+      const item = d.querySelector('.item-drag');
+      if(item && item.dataset.match === esperado) {
+        correctos++;
+      }
+    });
+    const retro = document.querySelector(idRetro);
+    if(correctos === drops.length) {
+      retro.textContent = "¡Correcto! Todas las relaciones coinciden. ✅";
+      retro.classList.add("correcto");
+      retro.classList.remove("error");
+    } else {
+      retro.textContent = "Algunas relaciones no son correctas. ❌";
+      retro.classList.add("error");
+      retro.classList.remove("correcto");
+    }
+  }
+
+  // Checamos cada 3s
+  setInterval(() => {
+    checarRelacion('#pantalla3', '#retroEstaciones');
+    checarRelacion('#pantalla4', '#retroLuna');
+  }, 3000);
+
+  /*****************************************************
+   * 5 & 8. Más Opción Múltiple (Fechas, Días de Meses)
+   * (Ya manejado por el mismo código de la sección 1)
+   *****************************************************/
+
+  /*****************************************************
+   * 6. Verdadero/Falso
+   *****************************************************/
+  document.querySelectorAll('.verdadero-falso').forEach(grupo => {
+    const correcto = grupo.dataset.correcto;
+    const retro = grupo.parentElement.querySelector('.retro');
+    grupo.querySelectorAll('.opcion').forEach(op => {
+      op.addEventListener('click', () => {
+        if(op.textContent.trim() === correcto){
+          retro.textContent = "¡Correcto! ✅";
+          retro.classList.remove("error");
+          retro.classList.add("correcto");
+        } else {
+          retro.textContent = "Intenta otra vez. ❌";
+          retro.classList.add("error");
+          retro.classList.remove("correcto");
+        }
+      });
+    });
+  });
+
+  /*****************************************************
+   * 7. Reordenar Planetas
+   *****************************************************/
+  let planetaArrastrado = null;
+  document.querySelectorAll('.planeta').forEach(planeta => {
+    planeta.addEventListener('dragstart', () => { planetaArrastrado = planeta; });
+    planeta.addEventListener('dragend', () => { planetaArrastrado = null; });
+  });
+
+  document.querySelectorAll('.espacio-planeta').forEach(slot => {
+    slot.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+    slot.addEventListener('drop', e => {
+      e.preventDefault();
+      if(planetaArrastrado){
+        // Colocamos solo si no hay un elemento ya
+        if(slot.children.length === 0){
+          slot.appendChild(planetaArrastrado);
+        }
+      }
+    });
+  });
+
+  function revisarPlanetas() {
+    const slots = document.querySelectorAll('.espacio-planeta');
+    let aciertos = 0;
+    slots.forEach(s => {
+      const esperado = s.dataset.esperado;
+      const p = s.querySelector('.planeta');
+      if(p && p.dataset.orden === esperado){
+        aciertos++;
+      }
+    });
+    const retro = document.getElementById('retroPlanetas');
+    if(aciertos === slots.length){
+      retro.textContent = "¡Planetas en orden correcto! ✅";
+      retro.classList.remove("error");
+      retro.classList.add("correcto");
+    } else {
+      retro.textContent = "Algunos planetas están fuera de lugar. ❌";
+      retro.classList.add("error");
+      retro.classList.remove("correcto");
+    }
+  }
+
+  setInterval(revisarPlanetas, 3000);
   </script>
+
 </body>
 </html>
