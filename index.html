@@ -127,7 +127,7 @@
     }
     .opcion:hover, .opcion:active { background: #444; }
     
-    /* 7) SELECCIÓN POR CLICK (para ejercicios de Relación) */
+    /* 7) SELECCIÓN POR CLICK (RELACIÓN) */
     .select-options {
       display: flex;
       flex-wrap: wrap;
@@ -177,7 +177,8 @@
     }
     .tierra {
       position: absolute;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
       font-size: 2.2rem;
     }
@@ -225,14 +226,14 @@
     #elasticLine {
       background: #ff4081;
       height: 8px;
-      width: 150px; /* Reducción inicial para permitir mayor estiramiento */
+      width: 150px; /* Línea más corta para permitir mayor estiramiento */
       margin: 20px auto;
       border-radius: 4px;
       transition: width 0.8s cubic-bezier(0.25, 1.5, 0.5, 1);
       position: relative;
     }
     #elasticHandle {
-      width: 30px; /* Más grande para mobile */
+      width: 30px; /* Handle más grande para mobile */
       height: 30px;
       background: #fff;
       border-radius: 50%;
@@ -261,14 +262,14 @@
   <section class="pantalla" id="pantalla1">
     <h1>🚀 ¡Bienvenido a los Ejercicios Espaciales!</h1>
     <p>Explora, aprende y diviértete con nuestros ejercicios interactivos.</p>
-    <!-- Botón grande de inicio: Gatito con cohete (simulado con emoji) -->
+    <!-- Botón grande de inicio: Gatito con casco espacial -->
     <button id="startButton" onclick="cambiarPantalla(2)">🐱🚀</button>
   </section>
   
   <!-- PANTALLA 2: MCQ - LUZ DE LA LUNA -->
   <section class="pantalla" id="pantalla2">
     <h2>Pregunta 1</h2>
-    <h3>¿De dónde proviene la luz de la Luna? 🌙</h3>
+    <h3>¿De dónde proviene la luz de la Luna?</h3>
     <div class="opciones" data-respuesta="Del Sol">
       <div class="opcion" data-value="De la Tierra">De la Tierra 🌍</div>
       <div class="opcion" data-value="De Marte">De Marte 🔴</div>
@@ -285,7 +286,7 @@
   <!-- PANTALLA 3: MCQ - ESTRELLA MÁS GRANDE -->
   <section class="pantalla" id="pantalla3">
     <h2>Pregunta 2</h2>
-    <h3>¿Cuál es la estrella más grande de nuestro sistema solar? ✨</h3>
+    <h3>¿Cuál es la estrella más grande de nuestro sistema solar?</h3>
     <div class="opciones" data-respuesta="El Sol">
       <div class="opcion" data-value="La Luna">La Luna 🌙</div>
       <div class="opcion" data-value="Saturno">Saturno 💫</div>
@@ -302,12 +303,12 @@
   <!-- PANTALLA 4: MCQ - NÚMERO DE PLANETAS -->
   <section class="pantalla" id="pantalla4">
     <h2>Pregunta 3</h2>
-    <h3>¿Cuántos planetas giran alrededor del Sol? 🪐</h3>
+    <h3>¿Cuántos planetas giran alrededor del Sol?</h3>
     <div class="opciones" data-respuesta="8">
-      <div class="opcion" data-value="7">7 🚫</div>
-      <div class="opcion" data-value="8">8</div>
-      <div class="opcion" data-value="9">9 ❓</div>
-      <div class="opcion" data-value="10">10 😮</div>
+      <div class="opcion" data-value="7">7 🐌</div>
+      <div class="opcion" data-value="8">8 🦊</div>
+      <div class="opcion" data-value="9">9 🦆</div>
+      <div class="opcion" data-value="10">10 🦁</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -337,10 +338,10 @@
   <!-- PANTALLA 6: MCQ - INFO DE LA LUNA -->
   <section class="pantalla" id="pantalla6">
     <h2>Pregunta 4</h2>
-    <h3>Según la información, ¿cuánto tarda la Luna en completar su órbita? 🌛</h3>
+    <h3>Según la información, ¿cuánto tarda la Luna en completar su órbita?</h3>
     <div class="opciones" data-respuesta="Aproximadamente un mes">
       <div class="opcion" data-value="Aproximadamente un mes">Aproximadamente un mes</div>
-      <div class="opcion" data-value="Una semana">Una semana 🐣</div>
+      <div class="opcion" data-value="Una semana">Una semana 🐥</div>
       <div class="opcion" data-value="Dos meses">Dos meses 🐢</div>
       <div class="opcion" data-value="Un año">Un año 🦉</div>
     </div>
@@ -383,7 +384,7 @@
     </div>
   </section>
   
-  <!-- PANTALLA 8: ORDENAR LAS ESTACIONES -->
+  <!-- PANTALLA 8: ORDENA LAS ESTACIONES -->
   <section class="pantalla" id="pantalla8">
     <h2>Ordena las Estaciones</h2>
     <p>Toca cada estación en el orden correcto (de Primavera a Invierno).</p>
@@ -406,9 +407,9 @@
     <h2>Pregunta 5</h2>
     <h3>¿Cuándo empieza la primavera?</h3>
     <div class="opciones" data-respuesta="20 de marzo">
-      <div class="opcion" data-value="20 de junio">20 de junio 🌞</div>
+      <div class="opcion" data-value="20 de junio">20 de junio 🌻</div>
       <div class="opcion" data-value="20 de marzo">20 de marzo 🌷</div>
-      <div class="opcion" data-value="23 de septiembre">23 de septiembre 🍁</div>
+      <div class="opcion" data-value="23 de septiembre">23 de septiembre 🍂</div>
       <div class="opcion" data-value="21 de diciembre">21 de diciembre 🎄</div>
     </div>
     <div class="retro"></div>
@@ -423,9 +424,8 @@
     <h2>Pregunta 6</h2>
     <h3>¿Cuándo empieza el otoño?</h3>
     <div class="opciones" data-respuesta="23 de septiembre">
-      <div class="opcion" data-value="21 de junio">21 de junio 🌞</div>
+      <div class="opcion" data-value="21 de junio">21 de junio 🌻</div>
       <div class="opcion" data-value="20 de marzo">20 de marzo 🌷</div>
-      <div class="opciones" data-respuesta="23 de septiembre">
       <div class="opcion" data-value="23 de septiembre">23 de septiembre 🍂</div>
       <div class="opcion" data-value="22 de diciembre">22 de diciembre 🎄</div>
     </div>
@@ -466,7 +466,7 @@
     </div>
   </section>
   
-  <!-- PANTALLA 13: ORDENAR LOS PLANETAS -->
+  <!-- PANTALLA 13: ORDENA LOS PLANETAS -->
   <section class="pantalla" id="pantalla13">
     <h2>Ordena los Planetas</h2>
     <p>Toca cada planeta en orden, desde el más cercano al Sol hasta el más lejano.</p>
@@ -487,15 +487,15 @@
     </div>
   </section>
   
-  <!-- PANTALLA 14: MCQ - ¿Cuántos días tiene febrero? -->
+  <!-- PANTALLA 14: MCQ - DÍAS DE FEBRERO -->
   <section class="pantalla" id="pantalla14">
     <h2>Pregunta 9</h2>
     <h3>¿Cuántos días tiene febrero en un año normal?</h3>
     <div class="opciones" data-respuesta="28">
-      <div class="opcion" data-value="27">27 😕</div>
-      <div class="opcion" data-value="28">28 😃</div>
-      <div class="opcion" data-value="29">29 😮</div>
-      <div class="opcion" data-value="30">30 😅</div>
+      <div class="opcion" data-value="27">27 🐌</div>
+      <div class="opcion" data-value="28">28 🦊</div>
+      <div class="opcion" data-value="29">29 🦆</div>
+      <div class="opcion" data-value="30">30 🐸</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -504,15 +504,15 @@
     </div>
   </section>
   
-  <!-- PANTALLA 15: MCQ - ¿Cuántos días tiene diciembre? -->
+  <!-- PANTALLA 15: MCQ - DÍAS DE DICIEMBRE -->
   <section class="pantalla" id="pantalla15">
     <h2>Pregunta 10</h2>
     <h3>¿Cuántos días tiene diciembre?</h3>
     <div class="opciones" data-respuesta="31">
-      <div class="opcion" data-value="28">28 😕</div>
-      <div class="opcion" data-value="29">29 😮</div>
-      <div class="opcion" data-value="30">30 😅</div>
-      <div class="opcion" data-value="31">31 😃</div>
+      <div class="opcion" data-value="28">28 🐌</div>
+      <div class="opcion" data-value="29">29 🦆</div>
+      <div class="opcion" data-value="30">30 🐸</div>
+      <div class="opcion" data-value="31">31 🦊</div>
     </div>
     <div class="retro"></div>
     <div class="nav-buttons">
@@ -536,7 +536,7 @@
     </div>
   </section>
   
-  <!-- PANTALLA 17: ELASTICIDAD - Pregunta 1 -->
+  <!-- PANTALLA 17: ELASTICIDAD - PREGUNTA 1 -->
   <section class="pantalla" id="pantalla17">
     <h2>Elasticidad - Pregunta 1</h2>
     <h3>¿Qué propiedad permite que un resorte se estire y vuelva a su forma original? 🐾</h3>
@@ -553,7 +553,7 @@
     </div>
   </section>
   
-  <!-- PANTALLA 18: ELASTICIDAD - Pregunta 2 -->
+  <!-- PANTALLA 18: ELASTICIDAD - PREGUNTA 2 -->
   <section class="pantalla" id="pantalla18">
     <h2>Elasticidad - Pregunta 2</h2>
     <h3>¿Qué ocurre cuando se suelta una banda elástica estirada? 🐾</h3>
@@ -570,7 +570,7 @@
     </div>
   </section>
   
-  <!-- PANTALLA 19: ELASTICIDAD - Pregunta 3 -->
+  <!-- PANTALLA 19: ELASTICIDAD - PREGUNTA 3 -->
   <section class="pantalla" id="pantalla19">
     <h2>Elasticidad - Pregunta 3</h2>
     <h3>¿Qué material es un buen ejemplo de elasticidad? 🐾</h3>
@@ -587,7 +587,7 @@
     </div>
   </section>
   
-  <!-- PANTALLA 20: ELASTICIDAD - Pregunta 4 -->
+  <!-- PANTALLA 20: ELASTICIDAD - PREGUNTA 4 -->
   <section class="pantalla" id="pantalla20">
     <h2>Elasticidad - Pregunta 4</h2>
     <h3>¿Cuál es la principal ventaja de la elasticidad en los materiales? 🐾</h3>
@@ -604,146 +604,8 @@
     </div>
   </section>
   
-  <!-- PANTALLA 21: ORDENAR LOS PLANETAS -->
+  <!-- PANTALLA 21: FINAL - INICIAR OTRA VEZ -->
   <section class="pantalla" id="pantalla21">
-    <h2>Ordena los Planetas</h2>
-    <p>Toca cada planeta en orden, desde el más cercano al Sol hasta el más lejano.</p>
-    <div class="contenedor-planetas-seleccion" id="planetasSeleccion">
-      <div class="boton-planeta" data-orden="1">Mercurio 🪐</div>
-      <div class="boton-planeta" data-orden="2">Venus 🌟</div>
-      <div class="boton-planeta" data-orden="3">Tierra 🌍</div>
-      <div class="boton-planeta" data-orden="4">Marte 🔴</div>
-      <div class="boton-planeta" data-orden="5">Júpiter 🌙</div>
-      <div class="boton-planeta" data-orden="6">Saturno 🪐</div>
-      <div class="boton-planeta" data-orden="7">Urano 🔵</div>
-      <div class="boton-planeta" data-orden="8">Neptuno 🔷</div>
-    </div>
-    <div class="retro" id="retroPlanetas"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(20)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(22)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 22: MCQ - Días de febrero -->
-  <section class="pantalla" id="pantalla22">
-    <h2>Pregunta 9</h2>
-    <h3>¿Cuántos días tiene febrero en un año normal? 🤔</h3>
-    <div class="opciones" data-respuesta="28">
-      <div class="opcion" data-value="27">27 😕</div>
-      <div class="opcion" data-value="28">28 😃</div>
-      <div class="opcion" data-value="29">29 😮</div>
-      <div class="opcion" data-value="30">30 😅</div>
-    </div>
-    <div class="retro"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(21)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(23)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 23: MCQ - Días de diciembre -->
-  <section class="pantalla" id="pantalla23">
-    <h2>Pregunta 10</h2>
-    <h3>¿Cuántos días tiene diciembre? ❄️</h3>
-    <div class="opciones" data-respuesta="31">
-      <div class="opcion" data-value="28">28 😕</div>
-      <div class="opcion" data-value="29">29 😮</div>
-      <div class="opcion" data-value="30">30 😅</div>
-      <div class="opcion" data-value="31">31 😃</div>
-    </div>
-    <div class="retro"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(22)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(24)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 24: ELASTICIDAD - Experimento Interactivo -->
-  <section class="pantalla" id="pantalla24">
-    <h2>Experimento de Elasticidad</h2>
-    <p>Estira la línea (¡tirar con fuerza!) y observa cómo regresa a su forma original.</p>
-    <div id="elasticityContainer">
-      <div id="elasticLine">
-        <div id="elasticHandle"></div>
-      </div>
-    </div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(23)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(25)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 25: ELASTICIDAD - Pregunta 1 -->
-  <section class="pantalla" id="pantalla25">
-    <h2>Elasticidad - Pregunta 1</h2>
-    <h3>¿Qué propiedad permite que un resorte se estire y vuelva a su forma original? 🐾</h3>
-    <div class="opciones" data-respuesta="Elasticidad">
-      <div class="opcion" data-value="Elasticidad">Elasticidad</div>
-      <div class="opcion" data-value="Plasticidad">Plasticidad</div>
-      <div class="opcion" data-value="Rigidez">Rigidez</div>
-      <div class="opcion" data-value="Fragilidad">Fragilidad</div>
-    </div>
-    <div class="retro"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(24)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(26)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 26: ELASTICIDAD - Pregunta 2 -->
-  <section class="pantalla" id="pantalla26">
-    <h2>Elasticidad - Pregunta 2</h2>
-    <h3>¿Qué ocurre cuando se suelta una banda elástica estirada? 🐾</h3>
-    <div class="opciones" data-respuesta="Regresa a su forma original">
-      <div class="opcion" data-value="Se rompe">Se rompe</div>
-      <div class="opcion" data-value="Regresa a su forma original">Regresa a su forma original</div>
-      <div class="opcion" data-value="Se deforma permanentemente">Se deforma permanentemente</div>
-      <div class="opcion" data-value="Se encoge">Se encoge</div>
-    </div>
-    <div class="retro"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(25)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(27)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 27: ELASTICIDAD - Pregunta 3 -->
-  <section class="pantalla" id="pantalla27">
-    <h2>Elasticidad - Pregunta 3</h2>
-    <h3>¿Qué material es un buen ejemplo de elasticidad? 🐾</h3>
-    <div class="opciones" data-respuesta="Goma">
-      <div class="opcion" data-value="Vidrio">Vidrio</div>
-      <div class="opcion" data-value="Madera">Madera</div>
-      <div class="opcion" data-value="Goma">Goma</div>
-      <div class="opcion" data-value="Metal rígido">Metal rígido</div>
-    </div>
-    <div class="retro"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(26)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(28)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 28: ELASTICIDAD - Pregunta 4 -->
-  <section class="pantalla" id="pantalla28">
-    <h2>Elasticidad - Pregunta 4</h2>
-    <h3>¿Cuál es la principal ventaja de la elasticidad en los materiales? 🐾</h3>
-    <div class="opciones" data-respuesta="Pueden recuperar su forma">
-      <div class="opcion" data-value="Pueden recuperar su forma">Pueden recuperar su forma</div>
-      <div class="opcion" data-value="Se vuelven duros">Se vuelven duros</div>
-      <div class="opcion" data-value="No se pueden estirar">No se pueden estirar</div>
-      <div class="opcion" data-value="Se rompen fácilmente">Se rompen fácilmente</div>
-    </div>
-    <div class="retro"></div>
-    <div class="nav-buttons">
-      <button class="boton" onclick="cambiarPantalla(27)">⬅️ Atrás</button>
-      <button class="boton" onclick="cambiarPantalla(29)">Siguiente ➡️</button>
-    </div>
-  </section>
-  
-  <!-- PANTALLA 29: FINAL - INICIAR OTRA VEZ -->
-  <section class="pantalla" id="pantalla29">
     <h2>¡Fin del Examen!</h2>
     <p>Si deseas comenzar de nuevo, presiona el botón.</p>
     <div class="nav-buttons">
@@ -792,7 +654,8 @@
       shuffleChildren('estacionesSource');
       shuffleChildren('lunaSource');
       shuffleChildren('planetasSeleccion');
-      shuffleChildren('estacionesSeleccion');
+      // Si se tiene un contenedor de estaciones para ordenar, se puede barajar también:
+      // shuffleChildren('estacionesSeleccion');
       shuffleChildren('estacionesDropContainer');
       shuffleChildren('fasesDropContainer');
     });
@@ -875,7 +738,7 @@
     luna.addEventListener('pointerdown', iniciarArrastreLuna);
     luna.addEventListener('touchstart', iniciarArrastreLuna, {passive:false});
     
-    /*************** F) SELECCIÓN POR CLICK (para ejercicios de Relación) ***************/
+    /*************** F) SELECCIÓN POR CLICK (RELACIÓN) ***************/
     let selectedOption = null;
     document.querySelectorAll('.select-options .option-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -892,9 +755,7 @@
           target.classList.add('correct');
           target.textContent = selectedOption;
           document.querySelectorAll('.select-options .option-btn').forEach(btn => {
-            if (btn.getAttribute('data-match') === selectedOption) {
-              btn.remove();
-            }
+            if (btn.getAttribute('data-match') === selectedOption) { btn.remove(); }
           });
         } else {
           target.classList.add('incorrect');
@@ -922,7 +783,7 @@
       }
     }
     
-    /*************** G) SELECCIÓN DE PLANETAS ***************/
+    /*************** G) SELECCIÓN DE PLANETAS (Orden) ***************/
     const contPlanetas = document.getElementById('planetasSeleccion');
     const retroPlanetas = document.getElementById('retroPlanetas');
     let nextExpected = 1;
